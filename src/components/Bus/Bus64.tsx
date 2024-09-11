@@ -52,8 +52,8 @@ export function Bus64() {
       <section className="flex max-sm:flex-col">
         {/* UPPER DECK SEATS */}
         <section className="flex flex-col items-center relative">
-          <div className="absolute bg-darkGray top-[0.5rem] left-[1.6rem] w-[15rem] h-[6.25rem] rounded-full z-[-10] max-sm:hidden"></div>
-          <section className="max-w-[16rem] h-[35rem] ml-5 mr-5 mt-5 mb-2 flex rounded-t-3xl p-2 bg-secondaryBackground">
+          <div className="absolute bg-neutral-700 top-[0.5rem] left-[1.6rem] w-[15rem] h-[6.25rem] rounded-full z-[-10] max-sm:hidden"></div>
+          <section className="max-w-[16rem] h-[35rem] ml-5 mr-5 mt-5 mb-2 flex rounded-t-3xl p-2 bg-neutral-300">
             {/* LEFT SIDE */}
             <section className="h-full flex-1 flex flex-wrap justify-center">
               {LowerDeckLeftSeats.map((seat) => (
@@ -67,10 +67,10 @@ export function Bus64() {
                 <>{seat}</>
               ))}
 
-              <div className="w-[80%] h-9 m-[.2rem] bg-lightGray text-blue-800 font-extrabold flex items-center justify-center">
+              <div className="w-[80%] h-9 m-[.2rem] bg-neutral-400 text-blue-800 font-extrabold flex items-center justify-center">
                 ESCADA
               </div>
-              <div className="w-[80%] h-9 m-[.2rem] bg-lightGray text-blue-800 font-extrabold flex items-center justify-center">
+              <div className="w-[80%] h-9 m-[.2rem] bg-neutral-400 text-blue-800 font-extrabold flex items-center justify-center">
                 CAFETERIA
               </div>
 
@@ -79,15 +79,15 @@ export function Bus64() {
               ))}
             </section>
           </section>
-          <div className="w-64 h-12 bg-secondaryBackground text-blue-800 flex items-center justify-center font-extrabold text-xl rounded-b-3xl">
+          <div className="w-64 h-12 bg-neutral-300 text-blue-800 flex items-center justify-center font-extrabold text-xl rounded-b-3xl">
             PISO SUPERIOR
           </div>
         </section>
 
         {/* LOWER DECK SEATS */}
         <section className="flex flex-col items-center relative">
-          <div className="absolute bg-darkGray top-[0.5rem] left-[1.6rem] w-[15rem] h-[6.25rem] rounded-full z-[-10] max-sm:hidden"></div>
-          <section className="max-w-[16rem] h-[35rem] ml-5 mr-5 mt-5 mb-2 flex rounded-t-3xl p-2 bg-secondaryBackground flex-col">
+          <div className="absolute bg-neutral-700 top-[0.5rem] left-[1.6rem] w-[15rem] h-[6.25rem] rounded-full z-[-10] max-sm:hidden"></div>
+          <section className="max-w-[16rem] h-[35rem] ml-5 mr-5 mt-5 mb-2 flex rounded-t-3xl p-2 bg-neutral-300 flex-col">
             <div className="w-full flex justify-between px-10">
               <div className="w-[30px] h-[30px] m-[.2rem] bg-blue-600 rounded-md"></div>
               <div className="w-[30px] h-[30px] m-[.2rem] bg-blue-600 rounded-md"></div>
@@ -95,33 +95,33 @@ export function Bus64() {
 
             <div className="flex flex-col gap-1">
               
-              <div className="w-[100%] h-[6rem] bg-lightGray flex flex-col font-extrabold">
+              <div className="w-[100%] h-[6rem] bg-neutral-400 flex flex-col font-extrabold">
                 <div className="flex items-center gap-2 pl-2">
-                  <div className="w-4 h-4 bg-yellow-700"></div>
+                  <div className="w-4 h-4 bg-amber-500"></div>
                   <p>PREFERENCIAL</p>
                 </div>
 
                 <div className="flex items-center gap-2 pl-2">
-                  <div className="w-4 h-4 bg-avaible"></div>
+                  <div className="w-4 h-4 bg-green-700"></div>
                   <p>DISPONÍVEL</p>
                 </div>
 
                 <div className="flex items-center gap-2 pl-2">
-                  <div className="w-4 h-4 bg-secondaryBlue"></div>
+                  <div className="w-4 h-4 bg-blue-950"></div>
                   <p>HOMEM (OCUPADO)</p>
                 </div>
 
                 <div className="flex items-center gap-2 pl-2">
-                  <div className="w-4 h-4 bg-pink-500"></div>
+                  <div className="w-4 h-4 bg-pink-600"></div>
                   <p>MULHER (OCUPADO)</p>
                 </div>
               </div>
 
               <div className="w-full flex justify-between gap-1">
-                <div className="w-[40%] h-[4rem] bg-lightGray text-blue-800 flex items-center justify-center font-extrabold">
+                <div className="w-[40%] h-[4rem] bg-neutral-400 text-blue-800 flex items-center justify-center font-extrabold">
                   BANHEIRO
                 </div>
-                <div className="w-[60%] h-[4rem] bg-lightGray text-blue-800 flex items-center justify-center font-extrabold">
+                <div className="w-[60%] h-[4rem] bg-neutral-400 text-blue-800 flex items-center justify-center font-extrabold">
                   ENTRADA
                 </div>
               </div>
@@ -142,11 +142,11 @@ export function Bus64() {
               </section>
             </div>
 
-            <div className="w-full h-[100px] bg-lightGray text-blue-800 flex items-center justify-center font-extrabold text-2xl">
+            <div className="w-full h-[100px] bg-neutral-400 text-blue-800 flex items-center justify-center font-extrabold text-2xl">
               BAGAGEIRO
             </div>
           </section>
-          <div className="w-64 h-12 bg-secondaryBackground text-blue-800 flex items-center justify-center font-extrabold text-xl rounded-b-3xl">
+          <div className="w-64 h-12 bg-neutral-300 text-blue-800 flex items-center justify-center font-extrabold text-xl rounded-b-3xl">
             PISO INFERIOR
           </div>
         </section>
