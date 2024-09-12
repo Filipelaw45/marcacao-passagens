@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { ufs } from '../../helpers/Ufs';
 import { Link } from 'react-router-dom';
 import Seats from '../../components/Seats/Seats';
-import { Bus43 } from '../../components/Bus/Bus43';
+import { Bus64 } from '../../components/Bus/Bus64';
 import { Header } from '../../components/Header/Header';
 
 export function Trip() {
@@ -35,9 +35,7 @@ export function Trip() {
   const [cities, setCities] = useState({ origin: [], destination: [] });
 
   const fetchCities = async (uf: string) => {
-    const response = await fetch(
-      `https://brasilapi.com.br/api/ibge/municipios/v1/${uf}`
-    );
+    const response = await fetch(`https://brasilapi.com.br/api/ibge/municipios/v1/${uf}`);
     const data = await response.json();
     return data;
   };
@@ -52,11 +50,7 @@ export function Trip() {
     setIsOpen(false);
   };
 
-  const handleChange = (
-    e:
-      | React.ChangeEvent<HTMLInputElement>
-      | React.ChangeEvent<HTMLSelectElement>
-  ) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target;
 
     setCurrentPassenger((prev) => {
@@ -93,110 +87,98 @@ export function Trip() {
   return (
     <>
       <Header>
-        <div className='py-3 relative mx-[10%]'>
+        <div className="py-3 relative mx-[10%]">
           <Link
-            to='/'
-            className='absolute top-1/2 translate-y-[-50%] inline py-2 px-4 bg-white rounded-full text-black font-extrabold text-sm transform transition-transform duration-200 hover:scale-105 active:scale-95'
+            to="/"
+            className="absolute top-1/2 translate-y-[-50%] inline py-2 px-4 bg-white rounded-full text-black font-extrabold text-sm transform transition-transform duration-200 hover:scale-105 active:scale-95"
           >
             Voltar
           </Link>
-          <h1 className='py-3 text-white font-extrabold text-center text-2xl'>
-            Viagem
-          </h1>
+          <h1 className="py-3 text-white font-extrabold text-center text-2xl">Viagem</h1>
         </div>
       </Header>
-      <div className='w-4/5 mx-auto'>
+      <div className="w-4/5 mx-auto">
         {isOpen && (
-          <div className='z-[20] fixed inset-0 flex items-center justify-center bg-black bg-opacity-50'>
-            <div className='w-2/4 bg-white p-4 rounded'>
+          <div className="z-[20] fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+            <div className="w-2/4 bg-white p-4 rounded">
               <div>
                 <p>Poltrona: {currentPassengerIndex}</p>
                 <label>Nome Completo:</label>
                 <input
-                  id='fullName'
-                  type='text'
-                  name='fullName'
-                autoComplete='off'
+                  id="fullName"
+                  type="text"
+                  name="fullName"
+                  autoComplete="off"
                   maxLength={50}
-                    onChange={handleChange}
-                value={currentPassenger.fullName || ''}
-                  className='border p-1 w-full'
-                />
-                <label htmlFor='rg'>RG:</label>
-                <input
-                  id='rg'
-                  type='text'
-                autoComplete='off'
-                  name='rg'
-                  maxLength={11}
-                onChange={handleChange}
-                  value={currentPassenger.rg.replace(/[^0-9]/g, '') || ''}
-                    className='border p-1 w-full'
-                />
-                <label htmlFor='sex'>Sexo:</label>
-                <select
-                  id='sex'
-                  name='sex'
-                    onChange={handleChange}
-                value={currentPassenger.sex || ''}
-                  className='border p-1 w-full'
-                >
-                  <option value='M'>Masculino</option>
-                  <option value='F'>Feminino</option>
-                </select>
-                <label htmlFor='value'>Passagem:</label>
-                <input
-                  id='value'
-                  type='number'
-                  name='value'
-                autoComplete='off'
-                  maxLength={70}
-                onChange={handleChange}
-                  value={
-                    currentPassenger.value.toString().replace(/\D/g, '') || ''
-                  }
-                    className='border p-1 w-full'
-                />
-                <label htmlFor='escort'>Escolta:</label>
-                <input
-                  id='escort'
-                  type='number'
-                  name='escort'
-                autoComplete='off'
-                  maxLength={70}
-                  value={
-                    currentPassenger.escort.toString().replace(/\D/g, '') || ''
-                  }
                   onChange={handleChange}
-                  className='border p-1 w-full'
+                  value={currentPassenger.fullName || ''}
+                  className="border p-1 w-full"
                 />
-                <label htmlFor='rg'>Observação:</label>
+                <label htmlFor="rg">RG:</label>
                 <input
-                  id='notes'
-                  type='text'
-                  name='notes'
-                autoComplete='off'
+                  id="rg"
+                  type="text"
+                  autoComplete="off"
+                  name="rg"
+                  maxLength={11}
+                  onChange={handleChange}
+                  value={currentPassenger.rg.replace(/[^0-9]/g, '') || ''}
+                  className="border p-1 w-full"
+                />
+                <label htmlFor="sex">Sexo:</label>
+                <select
+                  id="sex"
+                  name="sex"
+                  onChange={handleChange}
+                  value={currentPassenger.sex || ''}
+                  className="border p-1 w-full"
+                >
+                  <option value="M">Masculino</option>
+                  <option value="F">Feminino</option>
+                </select>
+                <label htmlFor="value">Passagem:</label>
+                <input
+                  id="value"
+                  type="number"
+                  name="value"
+                  autoComplete="off"
+                  maxLength={70}
+                  onChange={handleChange}
+                  value={currentPassenger.value.toString().replace(/\D/g, '') || ''}
+                  className="border p-1 w-full"
+                />
+                <label htmlFor="escort">Escolta:</label>
+                <input
+                  id="escort"
+                  type="number"
+                  name="escort"
+                  autoComplete="off"
+                  maxLength={70}
+                  value={currentPassenger.escort.toString().replace(/\D/g, '') || ''}
+                  onChange={handleChange}
+                  className="border p-1 w-full"
+                />
+                <label htmlFor="rg">Observação:</label>
+                <input
+                  id="notes"
+                  type="text"
+                  name="notes"
+                  autoComplete="off"
                   maxLength={70}
                   value={currentPassenger.notes || ''}
                   onChange={handleChange}
-                  className='border p-1 w-full'
+                  className="border p-1 w-full"
                 />
                 <p>
-                  Origem: {currentPassenger.origin.city} -{' '}
-                  {currentPassenger.origin.uf}
+                  Origem: {currentPassenger.origin.city} - {currentPassenger.origin.uf}
                 </p>
                 <p>
-                  Destino: {currentPassenger.destination.city} -{' '}
-                  {currentPassenger.destination.uf}
+                  Destino: {currentPassenger.destination.city} - {currentPassenger.destination.uf}
                 </p>
               </div>
               <p>Nova origem:</p>
-              <select
-                name='originUf'
-                onChange={handleChange}
-                value={currentPassenger.origin.uf}
-              >
-                <option value=''>Selecione a origem</option>
+              <select name="originUf" onChange={handleChange} value={currentPassenger.origin.uf}>
+                <option value="">Selecione a origem</option>
                 {ufs.map((uf) => (
                   <option key={uf.id} value={uf.sigla}>
                     {uf.sigla}
@@ -204,12 +186,8 @@ export function Trip() {
                 ))}
               </select>
 
-              <select
-                name='originCity'
-                onChange={handleChange}
-                value={currentPassenger.origin.city}
-              >
-                <option value=''>Selecione a cidade de origem</option>
+              <select name="originCity" onChange={handleChange} value={currentPassenger.origin.city}>
+                <option value="">Selecione a cidade de origem</option>
                 {cities.origin.map((city: City) => (
                   <option key={city.codigo_ibge} value={city.nome}>
                     {city.nome}
@@ -218,12 +196,8 @@ export function Trip() {
               </select>
 
               <p>Novo Destino:</p>
-              <select
-                name='destinationUf'
-                onChange={handleChange}
-                value={currentPassenger.destination.uf}
-              >
-                <option value=''>Selecione a origem</option>
+              <select name="destinationUf" onChange={handleChange} value={currentPassenger.destination.uf}>
+                <option value="">Selecione a origem</option>
                 {ufs.map((uf) => (
                   <option key={uf.id} value={uf.sigla}>
                     {uf.sigla}
@@ -231,12 +205,8 @@ export function Trip() {
                 ))}
               </select>
 
-              <select
-                name='destinationCity'
-                onChange={handleChange}
-                value={currentPassenger.destination.city}
-              >
-                <option value=''>Selecione a cidade de origem</option>
+              <select name="destinationCity" onChange={handleChange} value={currentPassenger.destination.city}>
+                <option value="">Selecione a cidade de origem</option>
                 {cities.destination.map((city: City) => (
                   <option key={city.codigo_ibge} value={city.nome}>
                     {city.nome}
@@ -245,121 +215,114 @@ export function Trip() {
               </select>
 
               <div>
-                <button className='py-3 px-2 bg-red-500' onClick={closeModal}>
+                <button className="py-3 px-2 bg-red-500" onClick={closeModal}>
                   Fechar
                 </button>
 
-              <button
-                className='py-3  px-2 bg-green-600'
-                onClick={() => {
-                  const passenger: Passenger = {
-                    seat: currentPassengerIndex,
-                    fullName: currentPassenger.fullName.toUpperCase(),
-                    rg: currentPassenger.rg,
-                    sex: currentPassenger.sex,
-                    origin: {
-                      city: currentPassenger.origin.city,
-                      uf: currentPassenger.origin.uf,
-                    },
-                    destination: {
-                      city: currentPassenger.destination.city,
-                      uf: currentPassenger.destination.uf,
-                    },
-                    notes: currentPassenger.notes.toUpperCase(),
-                    value: currentPassenger.value,
-                    escort: currentPassenger.escort,
-                  };
+                <button
+                  className="py-3  px-2 bg-green-600"
+                  onClick={() => {
+                    const passenger: Passenger = {
+                      seat: currentPassengerIndex,
+                      fullName: currentPassenger.fullName.toUpperCase(),
+                      rg: currentPassenger.rg,
+                      sex: currentPassenger.sex,
+                      origin: {
+                        city: currentPassenger.origin.city,
+                        uf: currentPassenger.origin.uf,
+                      },
+                      destination: {
+                        city: currentPassenger.destination.city,
+                        uf: currentPassenger.destination.uf,
+                      },
+                      notes: currentPassenger.notes.toUpperCase(),
+                      value: currentPassenger.value,
+                      escort: currentPassenger.escort,
+                    };
 
-                  const existingPassengerIndex = selectedTrip.passengers.findIndex(
-                    (p) => p.seat === passenger.seat
-                  );
+                    const existingPassengerIndex = selectedTrip.passengers.findIndex((p) => p.seat === passenger.seat);
 
-                  if (existingPassengerIndex !== -1) {
-                    selectedTrip.passengers[existingPassengerIndex] = passenger;
-                  } else {
-                    selectedTrip.passengers.push(passenger);
-                  }
+                    if (existingPassengerIndex !== -1) {
+                      selectedTrip.passengers[existingPassengerIndex] = passenger;
+                    } else {
+                      selectedTrip.passengers.push(passenger);
+                    }
 
-                  trips[selectedIndex] = selectedTrip;
-                  localStorage.setItem('trip', JSON.stringify(trips));
+                    trips[selectedIndex] = selectedTrip;
+                    localStorage.setItem('trip', JSON.stringify(trips));
 
-                  closeModal();
-                }}
-              >
-                Salvar
-              </button>
+                    closeModal();
+                  }}
+                >
+                  Salvar
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      )}
-      <div className='grid grid-cols-2'>
-        <div>
+        )}
+        <div className="grid grid-cols-2">
           <div>
-            <h1 className='py-2 text-2xl'>Detalhes da Viagem</h1>
-            <p>
-              <span className='font-semibold'>Data de Saída: </span>
-              {selectedTrip.departureDay.split('-').reverse().join('/')}
-            </p>
-            <p>
-              <span className='font-semibold'>Data de Retorno: </span>
-              {selectedTrip.returnDay.split('-').reverse().join('/')}
-            </p>
-            <p>
-              <span className='font-semibold'>Nº Ônibus: </span>
-              {selectedTrip.busNumber}
-            </p>
-            <p>
-              <span className='font-semibold'>Assentos: </span>
-              {selectedTrip.busModel} lugares
-            </p>
-            <p>
-              <span className='font-semibold'>Motorista: </span>
-              {selectedTrip.driver}
-            </p>
-            <p>
-              <span className='font-semibold'>Equipe de Apoio: </span>
-              {selectedTrip.team}
-            </p>
-            <p>
-              <span className='font-semibold'>Origem: </span>
-              {selectedTrip.originCity} - {selectedTrip.originUf}
-            </p>
-            <p>
-              <span className='font-semibold'>Destino: </span>
-              {selectedTrip.destinationCity} - {selectedTrip.destinationUf}
-            </p>
-          </div>
+            <div>
+              <h1 className="py-2 text-2xl">Detalhes da Viagem</h1>
+              <p>
+                <span className="font-semibold">Data de Saída: </span>
+                {selectedTrip.departureDay.split('-').reverse().join('/')}
+              </p>
+              <p>
+                <span className="font-semibold">Data de Retorno: </span>
+                {selectedTrip.returnDay.split('-').reverse().join('/')}
+              </p>
+              <p>
+                <span className="font-semibold">Nº Ônibus: </span>
+                {selectedTrip.busNumber}
+              </p>
+              <p>
+                <span className="font-semibold">Assentos: </span>
+                {selectedTrip.busModel} lugares
+              </p>
+              <p>
+                <span className="font-semibold">Motorista: </span>
+                {selectedTrip.driver}
+              </p>
+              <p>
+                <span className="font-semibold">Equipe de Apoio: </span>
+                {selectedTrip.team}
+              </p>
+              <p>
+                <span className="font-semibold">Origem: </span>
+                {selectedTrip.originCity} - {selectedTrip.originUf}
+              </p>
+              <p>
+                <span className="font-semibold">Destino: </span>
+                {selectedTrip.destinationCity} - {selectedTrip.destinationUf}
+              </p>
+            </div>
 
             <div>
-              <h2 className='py-2 mb-3 mt-10 text-2xl text-neutral-900 font-extrabold'>
-                Passageiros:
-              </h2>
-              <div className='h-[70vh] mb-10 overflow-y-auto max-w-[70%] scrollbar-custom'>
+              <h2 className="py-2 mb-3 mt-10 text-2xl text-neutral-900 font-extrabold">Passageiros:</h2>
+              <div className="h-[70vh] mb-10 overflow-y-auto max-w-[70%] scrollbar-custom">
                 {selectedTrip.passengers.map((passenger, index) => (
                   <div
                     onClick={() => openModal(passenger, index)}
-                    className={`w-full flex justify-evenly py-2 ${
-                      index % 2 === 0 ? 'bg-gray-200' : 'bg-gray-400'
-                    }`}
+                    className={`w-full flex justify-evenly py-2 ${index % 2 === 0 ? 'bg-gray-200' : 'bg-gray-400'}`}
                     key={index}
                   >
                     <div>
                       <p>
-                        <span className='font-semibold'>Nome: </span>
+                        <span className="font-semibold">Nome: </span>
                         {passenger.fullName}
                       </p>
                       <p>
-                        <span className='font-semibold'>RG: </span>
+                        <span className="font-semibold">RG: </span>
                         {passenger.rg}
                       </p>
                       <p>
-                        <span className='font-semibold'>Origem: </span>
+                        <span className="font-semibold">Origem: </span>
                         {passenger.origin.city} - {passenger.origin.uf}
                       </p>
                       <p>
-                        <span className='font-semibold'>Destino: </span>
-                        {passenger.destination.city} -{' '}
-                        {passenger.destination.uf}
+                        <span className="font-semibold">Destino: </span>
+                        {passenger.destination.city} - {passenger.destination.uf}
                       </p>
                     </div>
                     <Seats id={passenger.seat} sex={passenger.sex} />
@@ -369,14 +332,10 @@ export function Trip() {
             </div>
           </div>
           <div>
-            <div className='sticky top-5 mt-5'>
-              <Bus43 trip={selectedTrip} />
-              {/* <Bus64 trip={selectedTrip} /> */}
+            <div className="sticky top-5 mt-5">
+              <Bus64 openModal={openModal} trip={selectedTrip} />
             </div>
           </div>
-        </div>
-        <div className='sticky top-0'>
-          <Bus64 openModal={openModal} trip={selectedTrip} />
         </div>
       </div>
     </>
