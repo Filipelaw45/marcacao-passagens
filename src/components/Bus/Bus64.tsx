@@ -8,6 +8,7 @@ export function Bus64({ trip, openModal }: BusProps) {
   const upperDeckSecondColumn2 = [19, 20, 23, 24, 27, 28, 31, 32, 35, 36, 39, 40, 43, 44, 47, 48];
   const lowerDeckFirstColumn = [49, 50, 53, 54, 57, 58, 61, 62];
   const lowerDeckSecondColumn = [51, 52, 55, 56, 59, 60, 63, 64];
+  const preferentialSeats = [20, 19, 49, 50, 52, 51];
 
   return (
     <section className="flex max-sm:flex-col">
@@ -18,6 +19,7 @@ export function Bus64({ trip, openModal }: BusProps) {
           {/* LEFT SIDE */}
           <section className=" h-full flex-1 flex flex-wrap justify-center">
             {Array.from({ length: upperDeckFirstColumn.length }).map((_, index) => {
+              const isPreferential = preferentialSeats.includes(upperDeckFirstColumn[index]);
               const passenger = trip.passengers.find((p) => p.seat === upperDeckFirstColumn[index]);
               return (
                 <div key={upperDeckFirstColumn[index]}>
@@ -26,14 +28,15 @@ export function Bus64({ trip, openModal }: BusProps) {
                       sex={passenger.sex}
                       id={upperDeckFirstColumn[index]}
                       openModal={() => {
-                        openModal(passenger, passenger.seat); // Passa o passageiro e o índice
+                        openModal(passenger, passenger.seat);
                       }}
                     />
                   ) : (
                     <Seats
+                      isPreferential={isPreferential}
                       id={upperDeckFirstColumn[index]}
                       openModal={() => {
-                        openModal(null, upperDeckFirstColumn[index]); // Passa o passageiro e o índice
+                        openModal(null, upperDeckFirstColumn[index]);
                       }}
                     />
                   )}
@@ -45,6 +48,7 @@ export function Bus64({ trip, openModal }: BusProps) {
           {/* RIGHT SIDE */}
           <section className="h-full flex-1 flex flex-row-reverse flex-wrap justify-center">
             {Array.from({ length: upperDeckSecondColumn.length }).map((_, index) => {
+              const isPreferential = preferentialSeats.includes(upperDeckSecondColumn[index]);
               const passenger = trip.passengers.find((p) => p.seat === upperDeckSecondColumn[index]);
               return (
                 <div key={upperDeckSecondColumn[index]}>
@@ -53,14 +57,15 @@ export function Bus64({ trip, openModal }: BusProps) {
                       sex={passenger.sex}
                       id={upperDeckSecondColumn[index]}
                       openModal={() => {
-                        openModal(passenger, passenger.seat); // Passa o passageiro e o índice
+                        openModal(passenger, passenger.seat);
                       }}
                     />
                   ) : (
                     <Seats
+                      isPreferential={isPreferential}
                       id={upperDeckSecondColumn[index]}
                       openModal={() => {
-                        openModal(null, upperDeckSecondColumn[index]); // Passa o passageiro e o índice
+                        openModal(null, upperDeckSecondColumn[index]);
                       }}
                     />
                   )}
@@ -76,6 +81,7 @@ export function Bus64({ trip, openModal }: BusProps) {
             </div>
 
             {Array.from({ length: upperDeckSecondColumn2.length }).map((_, index) => {
+              const isPreferential = preferentialSeats.includes(upperDeckSecondColumn2[index]);
               const passenger = trip.passengers.find((p) => p.seat === upperDeckSecondColumn2[index]);
               return (
                 <div key={upperDeckSecondColumn2[index]}>
@@ -84,14 +90,15 @@ export function Bus64({ trip, openModal }: BusProps) {
                       sex={passenger.sex}
                       id={upperDeckSecondColumn2[index]}
                       openModal={() => {
-                        openModal(passenger, passenger.seat); // Passa o passageiro e o índice
+                        openModal(passenger, passenger.seat);
                       }}
                     />
                   ) : (
                     <Seats
+                      isPreferential={isPreferential}
                       id={upperDeckSecondColumn2[index]}
                       openModal={() => {
-                        openModal(null, upperDeckSecondColumn2[index]); // Passa o passageiro e o índice
+                        openModal(null, upperDeckSecondColumn2[index]);
                       }}
                     />
                   )}
@@ -151,6 +158,7 @@ export function Bus64({ trip, openModal }: BusProps) {
             {/* RIGHT SIDE */}
             <section className="h-full flex flex-wrap justify-center">
               {Array.from({ length: lowerDeckFirstColumn.length }).map((_, index) => {
+                const isPreferential = preferentialSeats.includes(lowerDeckFirstColumn[index]);
                 const passenger = trip.passengers.find((p) => p.seat === lowerDeckFirstColumn[index]);
                 return (
                   <div key={lowerDeckFirstColumn[index]}>
@@ -159,14 +167,15 @@ export function Bus64({ trip, openModal }: BusProps) {
                         sex={passenger.sex}
                         id={lowerDeckFirstColumn[index]}
                         openModal={() => {
-                          openModal(passenger, passenger.seat); // Passa o passageiro e o índice
+                          openModal(passenger, passenger.seat);
                         }}
                       />
                     ) : (
                       <Seats
+                        isPreferential={isPreferential}
                         id={lowerDeckFirstColumn[index]}
                         openModal={() => {
-                          openModal(null, lowerDeckFirstColumn[index]); // Passa o passageiro e o índice
+                          openModal(null, lowerDeckFirstColumn[index]);
                         }}
                       />
                     )}
@@ -177,6 +186,7 @@ export function Bus64({ trip, openModal }: BusProps) {
             {/* LEFT SIDE */}
             <section className="h-full flex flex-row-reverse flex-wrap justify-center">
               {Array.from({ length: lowerDeckSecondColumn.length }).map((_, index) => {
+                const isPreferential = preferentialSeats.includes(lowerDeckSecondColumn[index]);
                 const passenger = trip.passengers.find((p) => p.seat === lowerDeckSecondColumn[index]);
                 return (
                   <div key={lowerDeckSecondColumn[index]}>
@@ -185,14 +195,15 @@ export function Bus64({ trip, openModal }: BusProps) {
                         sex={passenger.sex}
                         id={lowerDeckSecondColumn[index]}
                         openModal={() => {
-                          openModal(passenger, passenger.seat); // Passa o passageiro e o índice
+                          openModal(passenger, passenger.seat);
                         }}
                       />
                     ) : (
                       <Seats
+                        isPreferential={isPreferential}
                         id={lowerDeckSecondColumn[index]}
                         openModal={() => {
-                          openModal(null, lowerDeckSecondColumn[index]); // Passa o passageiro e o índice
+                          openModal(null, lowerDeckSecondColumn[index]);
                         }}
                       />
                     )}

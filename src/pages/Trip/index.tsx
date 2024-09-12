@@ -304,7 +304,7 @@ export function Trip() {
                 {selectedTrip.passengers.map((passenger, index) => (
                   <div
                     onClick={() => openModal(passenger, index)}
-                    className={`w-full flex justify-evenly py-2 ${index % 2 === 0 ? 'bg-gray-200' : 'bg-gray-400'}`}
+                    className={`w-full flex justify-between px-3 py-2 ${index % 2 === 0 ? 'bg-gray-200' : 'bg-gray-400'}`}
                     key={index}
                   >
                     <div>
