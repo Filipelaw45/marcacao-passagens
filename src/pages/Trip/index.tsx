@@ -9,12 +9,29 @@ export function Trip() {
   const selectedIndex = localStorage.getItem('selectedTripIndex') || '[]';
   const selectedTrip: Trip = trips[selectedIndex];
 
-  const [isOpen, setIsOpen] = useState(false);
-  const [currentPassenger, setCurrentPassenger] = useState<Passenger>(selectedTrip.passengers[0]);
-
-  const [cities, setCities] = useState({ origin: [], destination: [] });
-
   const [currentPassengerIndex, setCurrentPassengerIndex] = useState(0);
+
+  const initialPassenger: Passenger = {
+    seat: currentPassengerIndex,
+    fullName: '',
+    rg: '',
+    sex: 'F',
+    origin: {
+      city: '',
+      uf: '',
+    },
+    destination: {
+      city: '',
+      uf: '',
+    },
+    notes: '',
+    value: 0,
+    escort: 0,
+  };
+
+  const [currentPassenger, setCurrentPassenger] = useState<Passenger>(initialPassenger);
+  const [isOpen, setIsOpen] = useState(false);
+  const [cities, setCities] = useState({ origin: [], destination: [] });
 
   const fetchCities = async (uf: string) => {
     const response = await fetch(`https://brasilapi.com.br/api/ibge/municipios/v1/${uf}`);
@@ -22,9 +39,9 @@ export function Trip() {
     return data;
   };
 
-  const openModal = (passenger: Passenger, index: number) => {
+  const openModal = (passenger: Passenger | null, index: number) => {
     setCurrentPassengerIndex(index);
-    setCurrentPassenger(passenger);
+    setCurrentPassenger(passenger ?? initialPassenger);
     setIsOpen(true);
   };
 
@@ -81,33 +98,35 @@ export function Trip() {
         <div className='z-[20] fixed inset-0 flex items-center justify-center bg-black bg-opacity-50'>
           <div className='w-2/4 bg-white p-4 rounded'>
             <div>
-              <p>Poltrona: {currentPassenger.seat}</p>
+              <p>Poltrona: {currentPassengerIndex}</p>
               <label>Nome Completo:</label>
               <input
                 id='fullName'
                 type='text'
                 name='fullName'
+                autoComplete='off'
                 maxLength={50}
-                value={currentPassenger.fullName.toUpperCase() || ''}
                 onChange={handleChange}
+                value={currentPassenger.fullName || ''}
                 className='border p-1 w-full'
               />
               <label htmlFor='rg'>RG:</label>
               <input
                 id='rg'
                 type='text'
+                autoComplete='off'
                 name='rg'
                 maxLength={11}
-                value={currentPassenger.rg.replace(/[^0-9]/g, '') || ''}
                 onChange={handleChange}
+                value={currentPassenger.rg.replace(/[^0-9]/g, '') || ''}
                 className='border p-1 w-full'
               />
               <label htmlFor='sex'>Sexo:</label>
               <select
                 id='sex'
                 name='sex'
-                value={currentPassenger.sex.toUpperCase() || ''}
                 onChange={handleChange}
+                value={currentPassenger.sex || ''}
                 className='border p-1 w-full'
               >
                 <option value='M'>Masculino</option>
@@ -118,9 +137,10 @@ export function Trip() {
                 id='value'
                 type='number'
                 name='value'
+                autoComplete='off'
                 maxLength={70}
-                value={currentPassenger.value.toString().replace(/\D/g, '') || ''}
                 onChange={handleChange}
+                value={currentPassenger.value.toString().replace(/\D/g, '') || ''}
                 className='border p-1 w-full'
               />
               <label htmlFor='escort'>Escolta:</label>
@@ -128,6 +148,7 @@ export function Trip() {
                 id='escort'
                 type='number'
                 name='escort'
+                autoComplete='off'
                 maxLength={70}
                 value={currentPassenger.escort.toString().replace(/\D/g, '') || ''}
                 onChange={handleChange}
@@ -138,8 +159,9 @@ export function Trip() {
                 id='notes'
                 type='text'
                 name='notes'
+                autoComplete='off'
                 maxLength={70}
-                value={currentPassenger.notes.toUpperCase() || ''}
+                value={currentPassenger.notes || ''}
                 onChange={handleChange}
                 className='border p-1 w-full'
               />
@@ -204,9 +226,37 @@ export function Trip() {
               <button
                 className='py-3  px-2 bg-green-600'
                 onClick={() => {
-                  selectedTrip.passengers[currentPassengerIndex] = currentPassenger;
+                  const passenger: Passenger = {
+                    seat: currentPassengerIndex,
+                    fullName: currentPassenger.fullName.toUpperCase(),
+                    rg: currentPassenger.rg,
+                    sex: currentPassenger.sex,
+                    origin: {
+                      city: currentPassenger.origin.city,
+                      uf: currentPassenger.origin.uf,
+                    },
+                    destination: {
+                      city: currentPassenger.destination.city,
+                      uf: currentPassenger.destination.uf,
+                    },
+                    notes: currentPassenger.notes.toUpperCase(),
+                    value: currentPassenger.value,
+                    escort: currentPassenger.escort,
+                  };
+
+                  const existingPassengerIndex = selectedTrip.passengers.findIndex(
+                    (p) => p.seat === passenger.seat
+                  );
+
+                  if (existingPassengerIndex !== -1) {
+                    selectedTrip.passengers[existingPassengerIndex] = passenger;
+                  } else {
+                    selectedTrip.passengers.push(passenger);
+                  }
+
                   trips[selectedIndex] = selectedTrip;
                   localStorage.setItem('trip', JSON.stringify(trips));
+
                   closeModal();
                 }}
               >
@@ -259,13 +309,11 @@ export function Trip() {
             <div>
               {selectedTrip.passengers.map((passenger, index) => (
                 <div
-                  onClick={() => openModal(passenger, index)}
+                  onClick={() => openModal(passenger, passenger.seat)}
                   className={`py-2 ${index % 2 === 0 ? 'bg-gray-200' : 'bg-gray-400'}`}
                   key={index}
                 >
-                  <p>
-                    <Seats id={passenger.seat} sex={passenger.sex} />
-                  </p>
+                  <Seats id={passenger.seat} sex={passenger.sex} />
                   <p>
                     <span className='font-semibold'>Nome: </span>
                     {passenger.fullName}
@@ -288,7 +336,7 @@ export function Trip() {
           </div>
         </div>
         <div className='sticky top-0'>
-          <Bus64 trip={selectedTrip} />
+          <Bus64 openModal={openModal} trip={selectedTrip} />
         </div>
       </div>
     </div>
