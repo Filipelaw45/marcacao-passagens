@@ -4,7 +4,7 @@ interface Bus43Props {
   trip: Trip;
 }
 
-export function Bus43({ trip }: Bus43Props) {
+export function Bus42({ trip }: Bus43Props) {
   const upperDeckFirstColumn = [1, 2, 4, 5, 7, 8, 9, 10, 11, 12, 14, 15, 17, 18, 20, 21, 23, 24, 26, 27, 29, 30];
   const upperDeckSecondColumn = [3, 6];
   const upperDeckSecondColumn2 = [13, 16, 19, 22, 25, 28, 31];
