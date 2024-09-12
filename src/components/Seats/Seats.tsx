@@ -25,12 +25,12 @@ const Seats: React.FC<SeatProps> = ({ id, width = 'w-11', height = 'h-9', sex, i
           handleClick();
           if (openModal) openModal();
         }}
-        className={`${width} ${height} m-[.2rem] flex items-center justify-center text-white rounded-lg relative transform transition-transform duration-200 
+        className={`${width} ${height} m-[.2rem] flex items-center justify-center text-white rounded-lg relative transform transition-transform duration-200 hover:scale-105 active:scale-95 hover:border-2 hover:border-white
         ${isClicked ? 'scale-95 opacity-80' : 'scale-100'}
         ${getBackgroundColor()}`}
       >
         <div
-          className="absolute bottom-0 left-1/2 transform -translate-x-1/2 bg-blue-800 rounded-t-lg border-white border"
+          className="absolute bottom-0 left-1/2 transform -translate-x-1/2 bg-blue-800 rounded-t-lg border-white border "
           style={{
             width: '80%',
             height: '20%',

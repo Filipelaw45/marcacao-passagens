@@ -14,8 +14,7 @@ export function Bus64({ trip, openModal }: BusProps) {
     <section className="flex max-sm:flex-col">
       {/* UPPER DECK SEATS */}
       <section className="flex flex-col items-center relative">
-        <div className="absolute bg-neutral-700 top-[0.5rem] left-[1.6rem] w-[15rem] h-[6.25rem] rounded-full z-[-10] max-sm:hidden"></div>
-        <section className="max-w-[16rem] h-[35rem] ml-5 mr-5 mt-5 mb-2 flex rounded-t-3xl p-2 bg-neutral-300">
+        <section className="max-w-[16rem] h-[35rem] ml-2 mr-2 mt-5 mb-2 flex rounded-t-3xl p-2 bg-neutral-300">
           {/* LEFT SIDE */}
           <section className=" h-full flex-1 flex flex-wrap justify-center">
             {Array.from({ length: upperDeckFirstColumn.length }).map((_, index) => {
@@ -73,10 +72,10 @@ export function Bus64({ trip, openModal }: BusProps) {
               );
             })}
 
-            <div className="w-[80%] h-9 m-[.2rem] bg-neutral-400 text-blue-800 font-extrabold flex items-center justify-center">
+            <div className="w-[80%] h-9 bg-gray-400 text-black text-xs font-semibold flex items-center justify-center rounded-md">
               ESCADA
             </div>
-            <div className="w-[80%] h-9 m-[.2rem] bg-neutral-400 text-blue-800 font-extrabold flex items-center justify-center">
+            <div className="w-[80%] h-9 bg-gray-400 text-black text-xs font-semibold flex items-center justify-center rounded-md">
               CAFETERIA
             </div>
 
@@ -114,17 +113,16 @@ export function Bus64({ trip, openModal }: BusProps) {
 
       {/* LOWER DECK SEATS */}
       <section className="flex flex-col items-center relative">
-        <div className="absolute bg-neutral-700 top-[0.5rem] left-[1.6rem] w-[15rem] h-[6.25rem] rounded-full z-[-10] max-sm:hidden"></div>
-        <section className="max-w-[16rem] h-[35rem] ml-5 mr-5 mt-5 mb-2 flex rounded-t-3xl p-2 bg-neutral-300 flex-col">
+        <section className="max-w-[16rem] h-[35rem] ml-2 mr-2 mt-5 mb-2 flex rounded-t-3xl p-2 bg-neutral-300 flex-col">
           <div className="w-full flex justify-between px-10">
-            <div className="w-[30px] h-[30px] m-[.2rem] bg-blue-600 rounded-md"></div>
-            <div className="w-[30px] h-[30px] m-[.2rem] bg-blue-600 rounded-md"></div>
+            <div className="w-[30px] h-[30px] m-[.2rem] bg-gray-400 rounded-md"></div>
+            <div className="w-[30px] h-[30px] m-[.2rem] bg-gray-400 rounded-md"></div>
           </div>
 
           <div className="flex flex-col gap-1">
-            <div className="w-[100%] h-[6rem] bg-neutral-400 flex flex-col font-extrabold">
+            <div className="w-[100%] h-[6rem] bg-gray-400 flex flex-col font-semibold text-black text-sm place-content-center rounded-md">
               <div className="flex items-center gap-2 pl-2">
-                <div className="w-4 h-4 bg-amber-500"></div>
+                <div className="w-4 h-4 bg-amber-500 "></div>
                 <p>PREFERENCIAL</p>
               </div>
 
@@ -145,16 +143,16 @@ export function Bus64({ trip, openModal }: BusProps) {
             </div>
 
             <div className="w-full flex justify-between gap-1">
-              <div className="w-[40%] h-[4rem] bg-neutral-400 text-blue-800 flex items-center justify-center font-extrabold">
+              <div className="w-[40%] h-[4rem] bg-gray-400 text-black text-xs flex items-center justify-center font-semibold rounded-md">
                 BANHEIRO
               </div>
-              <div className="w-[60%] h-[4rem] bg-neutral-400 text-blue-800 flex items-center justify-center font-extrabold">
+              <div className="w-[60%] h-[4rem] bg-gray-400 text-black text-xs flex items-center justify-center font-semibold rounded-md">
                 ENTRADA
               </div>
             </div>
           </div>
 
-          <div className="flex h-[40%] justify-center m-[.5rem] gap-5">
+          <div className="flex h-[40%] justify-center gap-5">
             {/* RIGHT SIDE */}
             <section className="h-full flex flex-wrap justify-center">
               {Array.from({ length: lowerDeckFirstColumn.length }).map((_, index) => {
@@ -213,7 +211,7 @@ export function Bus64({ trip, openModal }: BusProps) {
             </section>
           </div>
 
-          <div className="w-full h-[100px] bg-neutral-400 text-blue-800 flex items-center justify-center font-extrabold text-2xl">
+          <div className="w-full h-[100px] bg-gray-400 text-black flex items-center justify-center font-semibold text-2xl rounded-md">
             BAGAGEIRO
           </div>
         </section>

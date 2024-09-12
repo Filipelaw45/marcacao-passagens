@@ -300,14 +300,16 @@ export function Trip() {
 
             <div>
               <h2 className="py-2 mb-3 mt-10 text-2xl text-neutral-900 font-extrabold">Passageiros:</h2>
-              <div className="h-[70vh] mb-10 overflow-y-auto max-w-[70%] scrollbar-custom">
+              <div className="h-[70vh] mb-10 overflow-y-auto max-w-[80%] scrollbar-custom">
                 {selectedTrip.passengers.map((passenger, index) => (
                   <div
                     onClick={() => openModal(passenger, index)}
-                    className={`w-full flex justify-between px-3 py-2 ${index % 2 === 0 ? 'bg-gray-200' : 'bg-gray-400'}`}
+                    className={`w-full flex justify-between px-3 py-2 ${
+                      index % 2 === 0 ? 'bg-gray-200' : 'bg-gray-400 text-black'
+                    }`}
                     key={index}
                   >
-                    <div>
+                    <div className='text-sm'>
                       <p>
                         <span className="font-semibold">Nome: </span>
                         {passenger.fullName}
@@ -325,12 +327,13 @@ export function Trip() {
                         {passenger.destination.city} - {passenger.destination.uf}
                       </p>
                     </div>
-                    <Seats id={passenger.seat} sex={passenger.sex} />
+                    <Seats id={passenger.seat} sex={passenger.sex} width="w-[60px]" height="h-[60px]" />
                   </div>
                 ))}
               </div>
             </div>
           </div>
+
           <div>
             <div className="sticky top-5 mt-5">
               <Bus64 openModal={openModal} trip={selectedTrip} />
