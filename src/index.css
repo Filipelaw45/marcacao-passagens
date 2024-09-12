@@ -9,10 +9,27 @@
     scroll-behavior: smooth;
   }
   body {
-    font-family: 'Raleway', sans-serif;
+    font-family: 'poppins', sans-serif;
     color: #343434;
   }
   html {
     scroll-behavior: smooth;
   }
+}
+
+.scrollbar-custom::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scrollbar-custom::-webkit-scrollbar-track {
+  background: #d4d4d4;
+}
+
+.scrollbar-custom::-webkit-scrollbar-thumb {
+  background: #2563eb;
+  border-radius: 8px;
+}
+
+.scrollbar-custom::-webkit-scrollbar-thumb:hover {
+  background: #172554;
 }
