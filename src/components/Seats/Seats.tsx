@@ -1,13 +1,5 @@
 import { useState } from "react";
 
-interface SeatProps {
-  id: number;
-  width?: string;
-  height?: string;
-  sex?: string;
-  isPreferential?: boolean;
-}
-
 const Seats: React.FC<SeatProps> = ({
   id,
   width = "w-11",

@@ -3,6 +3,14 @@ interface City {
   codigo_ibge: string;
 }
 
+interface SeatProps {
+  id: number;
+  width?: string;
+  height?: string;
+  sex?: string;
+  isPreferential?: boolean;
+}
+
 interface Passenger {
   seat: number;
   fullName: string;

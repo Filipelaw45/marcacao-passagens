@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { ufs } from '../../helpers/Ufs';
 import { Link } from 'react-router-dom';
+import Seats from '../../components/Seats/Seats';
+import { Bus64 } from '../../components/Bus/Bus64';
 
 export function Trip() {
   const trips = JSON.parse(localStorage.getItem('trip') || '[]');
@@ -66,14 +68,17 @@ export function Trip() {
   return (
     <div className='w-4/5 mx-auto '>
       <div className='py-3 relative'>
-        <Link to='/' className=' absolute top-1/2 translate-y-[-50%] inline py-2 px-3 bg-green-700 rounded text-white'>
+        <Link
+          to='/'
+          className=' absolute top-1/2 translate-y-[-50%] inline py-2 px-3 bg-green-700 rounded text-white'
+        >
           Voltar
         </Link>
         <h1 className='py-3 text-center text-2xl'>Viagem</h1>
       </div>
 
       {isOpen && (
-        <div className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50'>
+        <div className='z-[20] fixed inset-0 flex items-center justify-center bg-black bg-opacity-50'>
           <div className='w-2/4 bg-white p-4 rounded'>
             <div>
               <p>Poltrona: {currentPassenger.seat}</p>
@@ -258,7 +263,9 @@ export function Trip() {
                   className={`py-2 ${index % 2 === 0 ? 'bg-gray-200' : 'bg-gray-400'}`}
                   key={index}
                 >
-                  <p>{passenger.seat}</p>
+                  <p>
+                    <Seats id={passenger.seat} sex={passenger.sex} />
+                  </p>
                   <p>
                     <span className='font-semibold'>Nome: </span>
                     {passenger.fullName}
@@ -280,8 +287,8 @@ export function Trip() {
             </div>
           </div>
         </div>
-        <div className='bg-blue-300 h-screen'>
-          <h3 className='text-center'>ônibus Aqui!</h3>
+        <div className='sticky top-0'>
+          <Bus64 trip={selectedTrip} />
         </div>
       </div>
     </div>
