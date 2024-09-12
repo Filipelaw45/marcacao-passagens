@@ -3,19 +3,25 @@ interface City {
   codigo_ibge: string;
 }
 
+interface BusProps {
+  trip: Trip;
+  openModal: (passenger: Passenger | null, index: number) => void;
+}
+
 interface SeatProps {
   id: number;
   width?: string;
   height?: string;
   sex?: string;
   isPreferential?: boolean;
+  openModal?: () => void;
 }
 
 interface Passenger {
   seat: number;
   fullName: string;
   rg: string;
-  sex: 'F' | 'M',
+  sex: 'F' | 'M';
   origin: {
     city: string;
     uf: string;

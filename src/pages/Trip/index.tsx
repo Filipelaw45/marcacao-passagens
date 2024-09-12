@@ -10,14 +10,29 @@ export function Trip() {
   const selectedIndex = localStorage.getItem('selectedTripIndex') || '[]';
   const selectedTrip: Trip = trips[selectedIndex];
 
-  const [isOpen, setIsOpen] = useState(false);
-  const [currentPassenger, setCurrentPassenger] = useState<Passenger>(
-    selectedTrip.passengers[0]
-  );
-
-  const [cities, setCities] = useState({ origin: [], destination: [] });
-
   const [currentPassengerIndex, setCurrentPassengerIndex] = useState(0);
+
+  const initialPassenger: Passenger = {
+    seat: currentPassengerIndex,
+    fullName: '',
+    rg: '',
+    sex: 'F',
+    origin: {
+      city: '',
+      uf: '',
+    },
+    destination: {
+      city: '',
+      uf: '',
+    },
+    notes: '',
+    value: 0,
+    escort: 0,
+  };
+
+  const [currentPassenger, setCurrentPassenger] = useState<Passenger>(initialPassenger);
+  const [isOpen, setIsOpen] = useState(false);
+  const [cities, setCities] = useState({ origin: [], destination: [] });
 
   const fetchCities = async (uf: string) => {
     const response = await fetch(
@@ -27,9 +42,9 @@ export function Trip() {
     return data;
   };
 
-  const openModal = (passenger: Passenger, index: number) => {
+  const openModal = (passenger: Passenger | null, index: number) => {
     setCurrentPassengerIndex(index);
-    setCurrentPassenger(passenger);
+    setCurrentPassenger(passenger ?? initialPassenger);
     setIsOpen(true);
   };
 
@@ -95,33 +110,35 @@ export function Trip() {
           <div className='z-[20] fixed inset-0 flex items-center justify-center bg-black bg-opacity-50'>
             <div className='w-2/4 bg-white p-4 rounded'>
               <div>
-                <p>Poltrona: {currentPassenger.seat}</p>
+                <p>Poltrona: {currentPassengerIndex}</p>
                 <label>Nome Completo:</label>
                 <input
                   id='fullName'
                   type='text'
                   name='fullName'
+                autoComplete='off'
                   maxLength={50}
-                  value={currentPassenger.fullName.toUpperCase() || ''}
-                  onChange={handleChange}
+                    onChange={handleChange}
+                value={currentPassenger.fullName || ''}
                   className='border p-1 w-full'
                 />
                 <label htmlFor='rg'>RG:</label>
                 <input
                   id='rg'
                   type='text'
+                autoComplete='off'
                   name='rg'
                   maxLength={11}
+                onChange={handleChange}
                   value={currentPassenger.rg.replace(/[^0-9]/g, '') || ''}
-                  onChange={handleChange}
-                  className='border p-1 w-full'
+                    className='border p-1 w-full'
                 />
                 <label htmlFor='sex'>Sexo:</label>
                 <select
                   id='sex'
                   name='sex'
-                  value={currentPassenger.sex.toUpperCase() || ''}
-                  onChange={handleChange}
+                    onChange={handleChange}
+                value={currentPassenger.sex || ''}
                   className='border p-1 w-full'
                 >
                   <option value='M'>Masculino</option>
@@ -132,18 +149,20 @@ export function Trip() {
                   id='value'
                   type='number'
                   name='value'
+                autoComplete='off'
                   maxLength={70}
+                onChange={handleChange}
                   value={
                     currentPassenger.value.toString().replace(/\D/g, '') || ''
                   }
-                  onChange={handleChange}
-                  className='border p-1 w-full'
+                    className='border p-1 w-full'
                 />
                 <label htmlFor='escort'>Escolta:</label>
                 <input
                   id='escort'
                   type='number'
                   name='escort'
+                autoComplete='off'
                   maxLength={70}
                   value={
                     currentPassenger.escort.toString().replace(/\D/g, '') || ''
@@ -156,8 +175,9 @@ export function Trip() {
                   id='notes'
                   type='text'
                   name='notes'
+                autoComplete='off'
                   maxLength={70}
-                  value={currentPassenger.notes.toUpperCase() || ''}
+                  value={currentPassenger.notes || ''}
                   onChange={handleChange}
                   className='border p-1 w-full'
                 />
@@ -229,63 +249,86 @@ export function Trip() {
                   Fechar
                 </button>
 
-                <button
-                  className='py-3  px-2 bg-green-600'
-                  onClick={() => {
-                    selectedTrip.passengers[currentPassengerIndex] =
-                      currentPassenger;
-                    trips[selectedIndex] = selectedTrip;
-                    localStorage.setItem('trip', JSON.stringify(trips));
-                    closeModal();
-                  }}
-                >
-                  Salvar
-                </button>
-              </div>
+              <button
+                className='py-3  px-2 bg-green-600'
+                onClick={() => {
+                  const passenger: Passenger = {
+                    seat: currentPassengerIndex,
+                    fullName: currentPassenger.fullName.toUpperCase(),
+                    rg: currentPassenger.rg,
+                    sex: currentPassenger.sex,
+                    origin: {
+                      city: currentPassenger.origin.city,
+                      uf: currentPassenger.origin.uf,
+                    },
+                    destination: {
+                      city: currentPassenger.destination.city,
+                      uf: currentPassenger.destination.uf,
+                    },
+                    notes: currentPassenger.notes.toUpperCase(),
+                    value: currentPassenger.value,
+                    escort: currentPassenger.escort,
+                  };
+
+                  const existingPassengerIndex = selectedTrip.passengers.findIndex(
+                    (p) => p.seat === passenger.seat
+                  );
+
+                  if (existingPassengerIndex !== -1) {
+                    selectedTrip.passengers[existingPassengerIndex] = passenger;
+                  } else {
+                    selectedTrip.passengers.push(passenger);
+                  }
+
+                  trips[selectedIndex] = selectedTrip;
+                  localStorage.setItem('trip', JSON.stringify(trips));
+
+                  closeModal();
+                }}
+              >
+                Salvar
+              </button>
             </div>
           </div>
-        )}
-        <div className='grid grid-cols-2'>
+        </div>
+      )}
+      <div className='grid grid-cols-2'>
+        <div>
           <div>
-            <div>
-              <h1 className='py-2 mb-3 text-2xl text-neutral-900 font-extrabold'>
-                Detalhes da Viagem:
-              </h1>
-              <div className=' p-4 mb-4 bg-neutral-200 rounded-xl w-max text-sm'>
-                <p>
-                  <span className='font-semibold'>Data de Saída: </span>
-                  {selectedTrip.departureDay.split('-').reverse().join('/')}
-                </p>
-                <p>
-                  <span className='font-semibold'>Data de Retorno: </span>
-                  {selectedTrip.returnDay.split('-').reverse().join('/')}
-                </p>
-                <p>
-                  <span className='font-semibold'>Nº Ônibus: </span>
-                  {selectedTrip.busNumber}
-                </p>
-                <p>
-                  <span className='font-semibold'>Assentos: </span>
-                  {selectedTrip.busModel} lugares
-                </p>
-                <p>
-                  <span className='font-semibold'>Motorista: </span>
-                  {selectedTrip.driver}
-                </p>
-                <p>
-                  <span className='font-semibold'>Equipe de Apoio: </span>
-                  {selectedTrip.team}
-                </p>
-                <p>
-                  <span className='font-semibold'>Origem: </span>
-                  {selectedTrip.originCity} - {selectedTrip.originUf}
-                </p>
-                <p>
-                  <span className='font-semibold'>Destino: </span>
-                  {selectedTrip.destinationCity} - {selectedTrip.destinationUf}
-                </p>
-              </div>
-            </div>
+            <h1 className='py-2 text-2xl'>Detalhes da Viagem</h1>
+            <p>
+              <span className='font-semibold'>Data de Saída: </span>
+              {selectedTrip.departureDay.split('-').reverse().join('/')}
+            </p>
+            <p>
+              <span className='font-semibold'>Data de Retorno: </span>
+              {selectedTrip.returnDay.split('-').reverse().join('/')}
+            </p>
+            <p>
+              <span className='font-semibold'>Nº Ônibus: </span>
+              {selectedTrip.busNumber}
+            </p>
+            <p>
+              <span className='font-semibold'>Assentos: </span>
+              {selectedTrip.busModel} lugares
+            </p>
+            <p>
+              <span className='font-semibold'>Motorista: </span>
+              {selectedTrip.driver}
+            </p>
+            <p>
+              <span className='font-semibold'>Equipe de Apoio: </span>
+              {selectedTrip.team}
+            </p>
+            <p>
+              <span className='font-semibold'>Origem: </span>
+              {selectedTrip.originCity} - {selectedTrip.originUf}
+            </p>
+            <p>
+              <span className='font-semibold'>Destino: </span>
+              {selectedTrip.destinationCity} - {selectedTrip.destinationUf}
+            </p>
+          </div>
 
             <div>
               <h2 className='py-2 mb-3 mt-10 text-2xl text-neutral-900 font-extrabold'>
@@ -331,6 +374,9 @@ export function Trip() {
               {/* <Bus64 trip={selectedTrip} /> */}
             </div>
           </div>
+        </div>
+        <div className='sticky top-0'>
+          <Bus64 openModal={openModal} trip={selectedTrip} />
         </div>
       </div>
     </>
