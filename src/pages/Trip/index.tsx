@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import Seats from '../../components/Seats/Seats';
 import { Bus64 } from '../../components/Bus/Bus64';
 import { Header } from '../../components/Header/Header';
+import { Bus42 } from '../../components/Bus/Bus42';
 
 export function Trip() {
   const trips = JSON.parse(localStorage.getItem('trip') || '[]');
@@ -97,13 +98,16 @@ export function Trip() {
           <h1 className="py-3 text-white font-extrabold text-center text-2xl">Viagem</h1>
         </div>
       </Header>
+      {/* container pop-up */}
       <div className="w-4/5 mx-auto">
         {isOpen && (
           <div className="z-[20] fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-            <div className="w-2/4 bg-white p-4 rounded">
+            <div className="w-3/4 h-6/7 px-8 py-3 bg-white rounded">
               <div>
-                <p>Poltrona: {currentPassengerIndex}</p>
-                <label>Nome Completo:</label>
+                <h2 className="py-3 font-extrabold text-center text-2xl">Poltrona {currentPassenger.seat}</h2>
+                <label className="font-semibold" htmlFor="fullName">
+                  Nome Completo:
+                </label>
                 <input
                   id="fullName"
                   type="text"
@@ -114,7 +118,9 @@ export function Trip() {
                   value={currentPassenger.fullName || ''}
                   className="border p-1 w-full"
                 />
-                <label htmlFor="rg">RG:</label>
+                <label className="font-semibold" htmlFor="rg">
+                  RG:
+                </label>
                 <input
                   id="rg"
                   type="text"
@@ -125,7 +131,9 @@ export function Trip() {
                   value={currentPassenger.rg.replace(/[^0-9]/g, '') || ''}
                   className="border p-1 w-full"
                 />
-                <label htmlFor="sex">Sexo:</label>
+                <label className="font-semibold" htmlFor="sex">
+                  Sexo:
+                </label>
                 <select
                   id="sex"
                   name="sex"
@@ -136,7 +144,9 @@ export function Trip() {
                   <option value="M">Masculino</option>
                   <option value="F">Feminino</option>
                 </select>
-                <label htmlFor="value">Passagem:</label>
+                <label className="font-semibold" htmlFor="value">
+                  Passagem:
+                </label>
                 <input
                   id="value"
                   type="number"
@@ -147,7 +157,9 @@ export function Trip() {
                   value={currentPassenger.value.toString().replace(/\D/g, '') || ''}
                   className="border p-1 w-full"
                 />
-                <label htmlFor="escort">Escolta:</label>
+                <label className="font-semibold" htmlFor="escort">
+                  Escolta:
+                </label>
                 <input
                   id="escort"
                   type="number"
@@ -158,7 +170,9 @@ export function Trip() {
                   onChange={handleChange}
                   className="border p-1 w-full"
                 />
-                <label htmlFor="rg">Observação:</label>
+                <label className="font-semibold" htmlFor="rg">
+                  Observação:
+                </label>
                 <input
                   id="notes"
                   type="text"
@@ -169,58 +183,81 @@ export function Trip() {
                   onChange={handleChange}
                   className="border p-1 w-full"
                 />
-                <p>
-                  Origem: {currentPassenger.origin.city} - {currentPassenger.origin.uf}
-                </p>
-                <p>
-                  Destino: {currentPassenger.destination.city} - {currentPassenger.destination.uf}
-                </p>
+                <div className="flex py-3 gap-10">
+                  <p>
+                    <span className="font-semibold">Origem:</span> {currentPassenger.origin.city} -{' '}
+                    {currentPassenger.origin.uf}
+                  </p>
+                  <p>
+                    <span className="font-semibold">Destino:</span> {currentPassenger.destination.city} -{' '}
+                    {currentPassenger.destination.uf}
+                  </p>
+                </div>
               </div>
-              <p>Nova origem:</p>
-              <select name="originUf" onChange={handleChange} value={currentPassenger.origin.uf}>
-                <option value="">Selecione a origem</option>
-                {ufs.map((uf) => (
-                  <option key={uf.id} value={uf.sigla}>
-                    {uf.sigla}
-                  </option>
-                ))}
-              </select>
 
-              <select name="originCity" onChange={handleChange} value={currentPassenger.origin.city}>
-                <option value="">Selecione a cidade de origem</option>
-                {cities.origin.map((city: City) => (
-                  <option key={city.codigo_ibge} value={city.nome}>
-                    {city.nome}
-                  </option>
-                ))}
-              </select>
+              <div className="flex w-full justify-between">
+                <div className="w-1/2">
+                  <label className="block py-1 font-semibold" htmlFor="originUf">
+                    Nova origem:
+                  </label>
+                  <div className="flex gap-3">
+                    <select id="originUf" name="originUf" onChange={handleChange} value={currentPassenger.origin.uf}>
+                      <option value="">Selecione a origem</option>
+                      {ufs.map((uf) => (
+                        <option key={uf.id} value={uf.sigla}>
+                          {uf.sigla}
+                        </option>
+                      ))}
+                    </select>
 
-              <p>Novo Destino:</p>
-              <select name="destinationUf" onChange={handleChange} value={currentPassenger.destination.uf}>
-                <option value="">Selecione a origem</option>
-                {ufs.map((uf) => (
-                  <option key={uf.id} value={uf.sigla}>
-                    {uf.sigla}
-                  </option>
-                ))}
-              </select>
+                    <select name="originCity" onChange={handleChange} value={currentPassenger.origin.city}>
+                      <option value="">Selecione a cidade de origem</option>
+                      {cities.origin.map((city: City) => (
+                        <option key={city.codigo_ibge} value={city.nome}>
+                          {city.nome}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+                <div className="w-1/2">
+                  <label className="block py-1 font-semibold" htmlFor="destinationUf">
+                    Novo Destino:
+                  </label>
+                  <div className="flex gap-3">
+                    <select
+                      id="destinationUf"
+                      name="destinationUf"
+                      onChange={handleChange}
+                      value={currentPassenger.destination.uf}
+                    >
+                      <option value="">Selecione a origem</option>
+                      {ufs.map((uf) => (
+                        <option key={uf.id} value={uf.sigla}>
+                          {uf.sigla}
+                        </option>
+                      ))}
+                    </select>
 
-              <select name="destinationCity" onChange={handleChange} value={currentPassenger.destination.city}>
-                <option value="">Selecione a cidade de origem</option>
-                {cities.destination.map((city: City) => (
-                  <option key={city.codigo_ibge} value={city.nome}>
-                    {city.nome}
-                  </option>
-                ))}
-              </select>
+                    <select name="destinationCity" onChange={handleChange} value={currentPassenger.destination.city}>
+                      <option value="">Selecione a cidade de origem</option>
+                      {cities.destination.map((city: City) => (
+                        <option key={city.codigo_ibge} value={city.nome}>
+                          {city.nome}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+              </div>
 
-              <div>
-                <button className="py-3 px-2 bg-red-500" onClick={closeModal}>
+              <div className="pt-3 w-1/2 flex justify-between m-auto">
+                <button className="rounded p-2 bg-red-600 text-white" onClick={closeModal}>
                   Fechar
                 </button>
 
                 <button
-                  className="py-3  px-2 bg-green-600"
+                  className="rounded p-2 bg-green-600 text-white"
                   onClick={() => {
                     const passenger: Passenger = {
                       seat: currentPassengerIndex,
@@ -304,7 +341,9 @@ export function Trip() {
                 {selectedTrip.passengers.map((passenger, index) => (
                   <div
                     onClick={() => openModal(passenger, index)}
-                    className={`w-full flex justify-between px-3 py-2 ${index % 2 === 0 ? 'bg-gray-200' : 'bg-gray-400'}`}
+                    className={`w-full flex justify-between px-3 py-2 ${
+                      index % 2 === 0 ? 'bg-gray-200' : 'bg-gray-400'
+                    }`}
                     key={index}
                   >
                     <div>
@@ -333,7 +372,8 @@ export function Trip() {
           </div>
           <div>
             <div className="sticky top-5 mt-5">
-              <Bus64 openModal={openModal} trip={selectedTrip} />
+              {selectedTrip.busModel === '42' && <Bus42 trip={selectedTrip} />}
+              {selectedTrip.busModel === '64' && <Bus64 openModal={openModal} trip={selectedTrip} />}
             </div>
           </div>
         </div>
