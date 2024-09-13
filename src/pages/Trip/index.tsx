@@ -55,7 +55,7 @@ export function Trip() {
     const { name, value } = e.target;
 
     setCurrentPassenger((prev) => {
-      const updatedPassenger = { ...prev };
+      const updatedPassenger = { ...prev, [name]: value };
 
       if (name === 'originUf') {
         updatedPassenger.origin.uf = value;
@@ -78,8 +78,6 @@ export function Trip() {
       if (name === 'destinationCity') {
         updatedPassenger.destination.city = value;
       }
-
-      setCurrentPassenger((prev) => ({ ...prev, [name]: value }));
 
       return updatedPassenger;
     });
@@ -104,7 +102,26 @@ export function Trip() {
           <div className="z-[20] fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
             <div className="w-3/4 h-6/7 px-8 py-3 bg-white rounded">
               <div>
-                <h2 className="py-3 font-extrabold text-center text-2xl">Poltrona {currentPassengerIndex}</h2>
+                <div className="relative">
+                  <h2 className="py-3 font-extrabold text-center text-2xl">Poltrona {currentPassengerIndex}</h2>
+                  <button
+                    className="absolute right-0 top-0 rounded p-2 bg-red-600 text-white"
+                    onClick={() => {
+                      const existingPassengerIndex = selectedTrip.passengers.findIndex(
+                        (p) => p.seat === currentPassenger.seat
+                      );
+
+                      if (existingPassengerIndex !== -1) {
+                        selectedTrip.passengers.splice(existingPassengerIndex, 1);
+                        trips[selectedIndex] = selectedTrip;
+                        localStorage.setItem('trip', JSON.stringify(trips));
+                        closeModal();
+                      }
+                    }}
+                  >
+                    Apagar
+                  </button>
+                </div>
                 <label className="font-semibold" htmlFor="fullName">
                   Nome Completo:
                 </label>
@@ -114,9 +131,9 @@ export function Trip() {
                   name="fullName"
                   autoComplete="off"
                   maxLength={50}
-                  onChange={handleChange}
-                  value={currentPassenger.fullName || ''}
+                  value={currentPassenger.fullName}
                   className="border p-1 w-full"
+                  onChange={handleChange}
                 />
                 <label className="font-semibold" htmlFor="rg">
                   RG:
@@ -128,7 +145,7 @@ export function Trip() {
                   name="rg"
                   maxLength={11}
                   onChange={handleChange}
-                  value={currentPassenger.rg.replace(/[^0-9]/g, '') || ''}
+                  value={currentPassenger.rg.replace(/[^0-9]/g, '')}
                   className="border p-1 w-full"
                 />
                 <label className="font-semibold" htmlFor="sex">
@@ -138,7 +155,7 @@ export function Trip() {
                   id="sex"
                   name="sex"
                   onChange={handleChange}
-                  value={currentPassenger.sex || ''}
+                  value={currentPassenger.sex || 'F'}
                   className="border p-1 w-full"
                 >
                   <option value="M">Masculino</option>
@@ -154,7 +171,7 @@ export function Trip() {
                   autoComplete="off"
                   maxLength={70}
                   onChange={handleChange}
-                  value={currentPassenger.value.toString().replace(/\D/g, '') || ''}
+                  value={currentPassenger.value.toString().replace(/\D/g, '')}
                   className="border p-1 w-full"
                 />
                 <label className="font-semibold" htmlFor="escort">
@@ -166,7 +183,7 @@ export function Trip() {
                   name="escort"
                   autoComplete="off"
                   maxLength={70}
-                  value={currentPassenger.escort.toString().replace(/\D/g, '') || ''}
+                  value={currentPassenger.escort.toString().replace(/\D/g, '')}
                   onChange={handleChange}
                   className="border p-1 w-full"
                 />
@@ -179,7 +196,7 @@ export function Trip() {
                   name="notes"
                   autoComplete="off"
                   maxLength={70}
-                  value={currentPassenger.notes || ''}
+                  value={currentPassenger.notes}
                   onChange={handleChange}
                   className="border p-1 w-full"
                 />
@@ -337,12 +354,12 @@ export function Trip() {
 
             <div>
               <h2 className="py-2 mb-3 mt-10 text-2xl text-neutral-900 font-extrabold">Passageiros:</h2>
-              <div className="h-[70vh] mb-10 overflow-y-auto max-w-[80%] scrollbar-custom">
+              <div className="h-[70vh] mb-10 overflow-y-auto max-w-[90%] scrollbar-custom">
                 {selectedTrip.passengers.map((passenger, index) => (
                   <div
                     onClick={() => openModal(passenger, passenger.seat)}
-                    className={`w-full flex justify-between px-3 py-2 ${
-                      index % 2 === 0 ? 'bg-gray-200' : 'bg-gray-400 text-black'
+                    className={`cursor-pointer w-full flex justify-between px-3 py-2 ${
+                      index % 2 === 0 ? 'bg-gray-200 hover:bg-blue-200' : 'bg-gray-400 text-black hover:bg-blue-200'
                     }`}
                     key={index}
                   >
