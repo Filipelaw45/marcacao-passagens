@@ -354,7 +354,7 @@ export function Trip() {
 
             <div>
               <h2 className="py-2 mb-3 mt-10 text-2xl text-neutral-900 font-extrabold">Passageiros:</h2>
-              <div className="h-[70vh] mb-10 overflow-y-auto max-w-[80%] scrollbar-custom">
+              <div className="h-[70vh] mb-10 overflow-y-auto max-w-[90%] scrollbar-custom">
                 {selectedTrip.passengers.map((passenger, index) => (
                   <div
                     onClick={() => openModal(passenger, passenger.seat)}
