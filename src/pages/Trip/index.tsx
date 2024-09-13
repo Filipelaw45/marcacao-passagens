@@ -5,6 +5,7 @@ import Seats from '../../components/Seats/Seats';
 import { Bus64 } from '../../components/Bus/Bus64';
 import { Header } from '../../components/Header/Header';
 import { Bus42 } from '../../components/Bus/Bus42';
+import { Bus40 } from '../../components/Bus/Bus40';
 
 export function Trip() {
   const trips = JSON.parse(localStorage.getItem('trip') || '[]');
@@ -392,6 +393,7 @@ export function Trip() {
             <div className="sticky top-5 mt-5">
               {selectedTrip.busModel === '42' && <Bus42 openModal={openModal} trip={selectedTrip} />}
               {selectedTrip.busModel === '64' && <Bus64 openModal={openModal} trip={selectedTrip} />}
+              {selectedTrip.busModel === '40' && <Bus40 openModal={openModal} trip={selectedTrip} />}
             </div>
           </div>
         </div>
