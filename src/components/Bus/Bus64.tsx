@@ -72,10 +72,10 @@ export function Bus64({ trip, openModal }: BusProps) {
               );
             })}
 
-            <div className="w-[80%] h-9 bg-gray-400 text-black text-xs font-semibold flex items-center justify-center rounded-md">
+            <div className="w-[80%] h-9 bg-gray-400 text-black text-xs font-semibold flex items-center justify-center rounded-md m-[.2rem]">
               ESCADA
             </div>
-            <div className="w-[80%] h-9 bg-gray-400 text-black text-xs font-semibold flex items-center justify-center rounded-md">
+            <div className="w-[80%] h-9 bg-gray-400 text-black text-xs font-semibold flex items-center justify-center rounded-md m-[.2rem]">
               CAFETERIA
             </div>
 
