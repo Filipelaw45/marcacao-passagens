@@ -77,7 +77,7 @@ export function Bus42({ trip, openModal }: BusProps) {
                 ESCADA
               </div>
               <div className="w-[80%] h-9 bg-gray-400 text-black text-xs font-semibold flex items-center justify-center rounded-md m-[.2rem]">
-                CAFETERIA
+                GELADEIRA
               </div>
 
               {Array.from({ length: upperDeckSecondColumn2.length }).map((_, index) => {
