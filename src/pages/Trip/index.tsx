@@ -373,7 +373,7 @@ export function Trip() {
 
           <div>
             <div className="sticky top-5 mt-5">
-              {selectedTrip.busModel === '42' && <Bus42 trip={selectedTrip} />}
+              {selectedTrip.busModel === '42' && <Bus42 openModal={openModal} trip={selectedTrip} />}
               {selectedTrip.busModel === '64' && <Bus64 openModal={openModal} trip={selectedTrip} />}
             </div>
           </div>
