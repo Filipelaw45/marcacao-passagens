@@ -104,7 +104,7 @@ export function Trip() {
           <div className="z-[20] fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
             <div className="w-3/4 h-6/7 px-8 py-3 bg-white rounded">
               <div>
-                <h2 className="py-3 font-extrabold text-center text-2xl">Poltrona {currentPassenger.seat}</h2>
+                <h2 className="py-3 font-extrabold text-center text-2xl">Poltrona {currentPassengerIndex}</h2>
                 <label className="font-semibold" htmlFor="fullName">
                   Nome Completo:
                 </label>
@@ -340,13 +340,13 @@ export function Trip() {
               <div className="h-[70vh] mb-10 overflow-y-auto max-w-[80%] scrollbar-custom">
                 {selectedTrip.passengers.map((passenger, index) => (
                   <div
-                    onClick={() => openModal(passenger, index)}
+                    onClick={() => openModal(passenger, passenger.seat)}
                     className={`w-full flex justify-between px-3 py-2 ${
                       index % 2 === 0 ? 'bg-gray-200' : 'bg-gray-400 text-black'
                     }`}
                     key={index}
                   >
-                    <div className='text-sm'>
+                    <div className="text-sm">
                       <p>
                         <span className="font-semibold">Nome: </span>
                         {passenger.fullName}
