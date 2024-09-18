@@ -85,7 +85,7 @@ export function Home() {
         {openReport && <PrintTrip trip={trip} handleClose={() => setOpenReport(false)} />}
 
         {isOpen && (
-          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
             <div className="w-3/4 h-6/7 px-8 py-3 bg-white">
               <h2 className="py-1 text-center text-xl">Criar Viagem</h2>
               <form onSubmit={handleSubmit} className="flex flex-col">
@@ -266,9 +266,9 @@ export function Home() {
           </div>
         )}
 
-        <div>
-          <h2 className="py-3 text-2xl">Lista de viagens</h2>
-          <div className='mb-10'>
+        <div className="mt-3">
+          <h2 className="py-3 text-2xl font-semibold">Lista de viagens</h2>
+          <div className="mb-10">
             <table className="table-auto text-center border border-zinc-600 w-full">
               <thead className="bg-blue-700 text-white">
                 <tr>
@@ -284,9 +284,12 @@ export function Home() {
                   <th className="px-4 py-2">Relatório</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody className="bg-neutral-200">
                 {trips.map((trip, index) => (
-                  <tr key={index} className="hover:bg-gray-400 hover:cursor-pointer ">
+                  <tr
+                    key={index}
+                    className="hover:bg-gray-400 hover:cursor-pointer transition-all duration-300 ease-in-out"
+                  >
                     <td className="py-2 border-y border-black">{trip.departureDay.split('-').reverse().join('/')}</td>
                     <td className="py-2 border-y border-black">{trip.returnDay.split('-').reverse().join('/')}</td>
                     <td className="py-2 border-y border-black">{trip.originUf}</td>
@@ -301,9 +304,9 @@ export function Home() {
                         localStorage.setItem('selectedTripIndex', `${index}`);
                         navigate('/viagem');
                       }}
-                      className=" rounded py-2 border-y border-black bg-green-600 text-white"
+                      className="relative overflow-hidden bg-green-700 place-self-start py-2 text-white font-semibold transition-all duration-300 ease-in-out before:absolute before:top-0 before:right-full before:bg-green-800 before:h-full before:w-full before:transition-all before:duration-300 before:ease-in-out hover:before:right-0 z-10"
                     >
-                      Detalhes
+                      <span className="relative z-20">Detalhes</span>
                     </td>
                     <td
                       onClick={() => {
@@ -312,9 +315,18 @@ export function Home() {
                         localStorage.setItem('trip', JSON.stringify(trip));
                         setTripsList(trip);
                       }}
-                      className=" rounded py-2 text-white border-y border-black bg-red-500"
+                      className="relative overflow-hidden bg-red-700 place-self-start py-2 text-white font-semibold transition-all duration-300 ease-in-out before:absolute before:top-0 before:right-full before:bg-red-800 before:h-full before:w-full before:transition-all before:duration-300 before:ease-in-out hover:before:right-0 z-10"
                     >
-                      Apagar
+                      <span className="relative z-20">Apagar</span>
+                    </td>
+                    <td
+                      onClick={() => {
+                        localStorage.setItem('selectedTripIndex', `${index}`);
+                        setOpenReport(!isOpen);
+                      }}
+                      className="rounded py-2 text-white border-y border-black bg-blue-500"
+                    >
+                      Relatório
                     </td>
                     <td
                       onClick={() => {
