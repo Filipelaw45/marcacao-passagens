@@ -15,7 +15,7 @@ export function Trip() {
   const [currentPassengerIndex, setCurrentPassengerIndex] = useState(0);
 
   const initialPassenger: Passenger = {
-    seat: currentPassengerIndex,
+    seat: -1,
     fullName: '',
     rg: '',
     sex: 'F',
