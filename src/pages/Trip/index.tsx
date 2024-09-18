@@ -33,7 +33,9 @@ export function Trip() {
   };
 
   const [currentPassenger, setCurrentPassenger] = useState<Passenger>(initialPassenger);
+  const [currentTrip, setCurrentTrip] = useState<Trip>(selectedTrip);
   const [isOpen, setIsOpen] = useState(false);
+  const [editTrip, setEditTrip] = useState(false);
   const [cities, setCities] = useState({ origin: [], destination: [] });
 
   const fetchCities = async (uf: string) => {
@@ -48,8 +50,16 @@ export function Trip() {
     setIsOpen(true);
   };
 
+  const openEditTrip = () => {
+    setEditTrip(true);
+  };
+
   const closeModal = () => {
     setIsOpen(false);
+  };
+
+  const closeEditTrip = () => {
+    setEditTrip(false);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => {
@@ -81,6 +91,38 @@ export function Trip() {
       }
 
       return updatedPassenger;
+    });
+  };
+
+  const handleTripChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => {
+    const { name, value } = e.target;
+
+    setCurrentTrip((prev) => {
+      const updatedTrip = { ...prev, [name]: value };
+
+      if (name === 'originUf') {
+        updatedTrip.originUf = value;
+        fetchCities(value).then((fetchedCities) => {
+          setCities((prevCities) => ({ ...prevCities, origin: fetchedCities }));
+        });
+      }
+      if (name === 'originCity') {
+        updatedTrip.originCity = value;
+      }
+      if (name === 'destinationUf') {
+        updatedTrip.destinationUf = value;
+        fetchCities(value).then((fetchedCities) => {
+          setCities((prevCities) => ({
+            ...prevCities,
+            destination: fetchedCities,
+          }));
+        });
+      }
+      if (name === 'destinationCity') {
+        updatedTrip.destinationCity = value;
+      }
+
+      return updatedTrip;
     });
   };
 
@@ -315,42 +357,233 @@ export function Trip() {
             </div>
           </div>
         )}
+
+        {editTrip && (
+          <div className="z-[20] fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+            <div className="w-3/4 h-6/7 px-8 py-3 bg-white rounded">
+              <div>
+                <label className="font-semibold" htmlFor="departureDay">
+                  Data de saída:
+                </label>
+                <input
+                  id="departureDay"
+                  type="date"
+                  name="departureDay"
+                  autoComplete="off"
+                  maxLength={50}
+                  value={currentTrip.departureDay}
+                  className="border p-1 w-full"
+                  onChange={handleTripChange}
+                />
+                <label className="font-semibold" htmlFor="returnDay">
+                  Data de retorno:
+                </label>
+                <input
+                  id="returnDay"
+                  type="date"
+                  name="returnDay"
+                  autoComplete="off"
+                  maxLength={50}
+                  value={currentTrip.returnDay}
+                  className="border p-1 w-full"
+                  onChange={handleTripChange}
+                />
+                <label className="font-semibold" htmlFor="busNumber">
+                  Nº Ônibus:
+                </label>
+                <input
+                  id="busNumber"
+                  name="busNumber"
+                  onChange={handleTripChange}
+                  value={currentTrip.busNumber}
+                  className="border p-1 w-full"
+                />
+              </div>
+
+              <label className="block py-1 font-semibold" htmlFor="busModel">
+                Modelo do ônibus:
+              </label>
+              <select
+                className="border p-1 w-full"
+                value={currentTrip.busModel}
+                id="busModel"
+                name="busModel"
+                onChange={handleTripChange}
+              >
+                <option key="40" value={40}>
+                  40 lugares
+                </option>
+                <option key="42" value={42}>
+                  42 lugares
+                </option>
+                <option key="64" value={64}>
+                  64 lugares
+                </option>
+              </select>
+
+              <label className="block py-1 font-semibold" htmlFor="driver">
+                Motorista:
+              </label>
+              <input
+                className="border p-1 w-full"
+                id="driver"
+                name="driver"
+                type="text"
+                autoComplete="off"
+                value={currentTrip.driver}
+                onChange={handleTripChange}
+              />
+
+              <label className="block py-1 font-semibold" htmlFor="team">
+                Equipe de apoio:
+              </label>
+              <input
+                className="border p-1 w-full"
+                id="team"
+                name="team"
+                type="text"
+                autoComplete="off"
+                value={currentTrip.team}
+                onChange={handleTripChange}
+              />
+
+              <div className="flex w-full justify-between">
+                <div className="w-1/2">
+                  <label className="block py-1 font-semibold" htmlFor="originUf">
+                    Nova origem:
+                  </label>
+                  <div className="flex gap-3">
+                    <select id="originUf" name="originUf" onChange={handleTripChange} value={currentTrip.originUf}>
+                      <option value="">Selecione a origem</option>
+                      {ufs.map((uf) => (
+                        <option key={uf.id} value={uf.sigla}>
+                          {uf.sigla}
+                        </option>
+                      ))}
+                    </select>
+
+                    <select name="originCity" onChange={handleTripChange} value={currentTrip.originCity}>
+                      <option value="">Selecione a cidade de origem</option>
+                      {cities.origin.map((city: City) => (
+                        <option key={city.codigo_ibge} value={city.nome}>
+                          {city.nome}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+                <div className="w-1/2">
+                  <label className="block py-1 font-semibold" htmlFor="destinationUf">
+                    Novo Destino:
+                  </label>
+                  <div className="flex gap-3">
+                    <select
+                      id="destinationUf"
+                      name="destinationUf"
+                      onChange={handleTripChange}
+                      value={currentTrip.destinationUf}
+                    >
+                      <option value="">Selecione a origem</option>
+                      {ufs.map((uf) => (
+                        <option key={uf.id} value={uf.sigla}>
+                          {uf.sigla}
+                        </option>
+                      ))}
+                    </select>
+
+                    <select name="destinationCity" onChange={handleTripChange} value={currentTrip.destinationCity}>
+                      <option value="">Selecione a cidade de origem</option>
+                      {cities.destination.map((city: City) => (
+                        <option key={city.codigo_ibge} value={city.nome}>
+                          {city.nome}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div className="pt-3 w-1/2 flex justify-between m-auto">
+                <button className="rounded p-2 bg-red-600 text-white" onClick={closeEditTrip}>
+                  Fechar
+                </button>
+
+                <button
+                  className="rounded p-2 bg-green-600 text-white"
+                  onClick={() => {
+                    const updatedTrip: Trip = {
+                      busNumber: currentTrip.busNumber,
+                      departureDay: currentTrip.departureDay,
+                      returnDay: currentTrip.returnDay,
+                      busModel: currentTrip.busModel,
+                      destinationCity: currentTrip.destinationCity,
+                      destinationUf: currentTrip.destinationUf,
+                      originCity: currentTrip.originCity,
+                      originUf: currentTrip.originUf,
+                      driver: currentTrip.driver,
+                      passengers: currentTrip.passengers,
+                      team: currentTrip.team,
+                    };
+
+                    trips[selectedIndex] = updatedTrip;
+                    localStorage.setItem('trip', JSON.stringify(trips));
+                    closeEditTrip();
+                  }}
+                >
+                  Salvar
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
         <div className="grid grid-cols-2">
           <div>
-            <div>
-              <h1 className="py-2 text-2xl">Detalhes da Viagem</h1>
-              <p>
-                <span className="font-semibold">Data de Saída: </span>
-                {selectedTrip.departureDay.split('-').reverse().join('/')}
-              </p>
-              <p>
-                <span className="font-semibold">Data de Retorno: </span>
-                {selectedTrip.returnDay.split('-').reverse().join('/')}
-              </p>
-              <p>
-                <span className="font-semibold">Nº Ônibus: </span>
-                {selectedTrip.busNumber}
-              </p>
-              <p>
-                <span className="font-semibold">Assentos: </span>
-                {selectedTrip.busModel} lugares
-              </p>
-              <p>
-                <span className="font-semibold">Motorista: </span>
-                {selectedTrip.driver}
-              </p>
-              <p>
-                <span className="font-semibold">Equipe de Apoio: </span>
-                {selectedTrip.team}
-              </p>
-              <p>
-                <span className="font-semibold">Origem: </span>
-                {selectedTrip.originCity} - {selectedTrip.originUf}
-              </p>
-              <p>
-                <span className="font-semibold">Destino: </span>
-                {selectedTrip.destinationCity} - {selectedTrip.destinationUf}
-              </p>
+            <div className="flex gap-10">
+              <div>
+                <h1 className="py-2 text-2xl">Detalhes da Viagem</h1>
+                <div className="bg-neutral-300 rounded-lg p-3 flex gap-7">
+                  <div>
+                    <p>
+                      <span className="font-semibold">Data de Saída: </span>
+                      {selectedTrip.departureDay.split('-').reverse().join('/')}
+                    </p>
+                    <p>
+                      <span className="font-semibold">Data de Retorno: </span>
+                      {selectedTrip.returnDay.split('-').reverse().join('/')}
+                    </p>
+                    <p>
+                      <span className="font-semibold">Nº Ônibus: </span>
+                      {selectedTrip.busNumber}
+                    </p>
+                    <p>
+                      <span className="font-semibold">Assentos: </span>
+                      {selectedTrip.busModel} lugares
+                    </p>
+                    <p>
+                      <span className="font-semibold">Motorista: </span>
+                      {selectedTrip.driver}
+                    </p>
+                    <p>
+                      <span className="font-semibold">Equipe de Apoio: </span>
+                      {selectedTrip.team}
+                    </p>
+                    <p>
+                      <span className="font-semibold">Origem: </span>
+                      {selectedTrip.originCity} - {selectedTrip.originUf}
+                    </p>
+                    <p>
+                      <span className="font-semibold">Destino: </span>
+                      {selectedTrip.destinationCity} - {selectedTrip.destinationUf}
+                    </p>
+                  </div>
+                  <button
+                    className="relative overflow-hidden bg-blue-700 place-self-start py-3 px-6 text-white font-semibold rounded-xl transition-all duration-300 ease-in-out before:absolute before:top-0 before:right-full before:bg-blue-800 before:h-full before:w-full before:transition-all before:duration-300 before:ease-in-out hover:before:right-0 z-10"
+                    onClick={openEditTrip}
+                  >
+                    <span className="relative z-20">Editar</span>
+                  </button>
+                </div>
+              </div>
             </div>
 
             <div>
@@ -390,7 +623,7 @@ export function Trip() {
           </div>
 
           <div>
-            <div className="sticky top-5 mt-5">
+            <div className="sticky top-5 mt-5 flex justify-center">
               {selectedTrip.busModel === '42' && <Bus42 openModal={openModal} trip={selectedTrip} />}
               {selectedTrip.busModel === '64' && <Bus64 openModal={openModal} trip={selectedTrip} />}
               {selectedTrip.busModel === '40' && <Bus40 openModal={openModal} trip={selectedTrip} />}
