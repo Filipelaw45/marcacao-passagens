@@ -4,9 +4,11 @@ import { createTrip } from '../../utils/localStorage';
 
 import { useNavigate } from 'react-router-dom';
 import { Header } from '../../components/Header/Header';
+import { PrintTrip } from '../../components/PrintTrip';
 
 export function Home() {
   const [isOpen, setIsOpen] = useState(false);
+  const [openReport, setOpenReport] = useState(false);
   const navigate = useNavigate();
   const initialTrip: Trip = {
     departureDay: '',
@@ -28,6 +30,10 @@ export function Home() {
   const trips: Trip[] = JSON.parse(localStorage.getItem('trip') || '[]');
 
   const [tripsList, setTripsList] = useState<Trip[]>(trips);
+
+  const selectedTrip = localStorage.getItem('selectedTripIndex');
+  const selectedTripIndex = selectedTrip ? JSON.parse(selectedTrip) : 0;
+  const trip = trips[selectedTripIndex] || trips[0];
 
   const fetchCities = async (uf: string) => {
     const response = await fetch(`https://brasilapi.com.br/api/ibge/municipios/v1/${uf}`);
@@ -75,6 +81,8 @@ export function Home() {
         >
           Criar Viagem
         </button>
+
+        {openReport && <PrintTrip trip={trip} handleClose={() => setOpenReport(false)} />}
 
         {isOpen && (
           <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
@@ -260,7 +268,7 @@ export function Home() {
 
         <div className="mt-3">
           <h2 className="py-3 text-2xl font-semibold">Lista de viagens</h2>
-          <div>
+          <div className="mb-10">
             <table className="table-auto text-center border border-zinc-600 w-full">
               <thead className="bg-blue-700 text-white">
                 <tr>
@@ -273,6 +281,7 @@ export function Home() {
                   <th className="px-4 py-2">Passageiros</th>
                   <th className="px-4 py-2">Detalhes</th>
                   <th className="px-4 py-2">Apagar</th>
+                  <th className="px-4 py-2">Relatório</th>
                 </tr>
               </thead>
               <tbody className="bg-neutral-200">
@@ -313,6 +322,24 @@ export function Home() {
                       className="relative overflow-hidden bg-red-700 place-self-start py-2 text-white font-semibold transition-all duration-300 ease-in-out before:absolute before:top-0 before:right-full before:bg-red-800 before:h-full before:w-full before:transition-all before:duration-300 before:ease-in-out hover:before:right-0 z-10"
                     >
                       <span className="relative z-20">Apagar</span>
+                    </td>
+                    <td
+                      onClick={() => {
+                        localStorage.setItem('selectedTripIndex', `${index}`);
+                        setOpenReport(!isOpen);
+                      }}
+                      className="rounded py-2 text-white border-y border-black bg-blue-500"
+                    >
+                      Relatório
+                    </td>
+                    <td
+                      onClick={() => {
+                        localStorage.setItem('selectedTripIndex', `${index}`);
+                        setOpenReport(!isOpen);
+                      }}
+                      className="rounded py-2 text-white border-y border-black bg-blue-500"
+                    >
+                      Relatório
                     </td>
                   </tr>
                 ))}
