@@ -328,15 +328,6 @@ export function Home() {
                     >
                       Relatório
                     </td>
-                    <td
-                      onClick={() => {
-                        localStorage.setItem('selectedTripIndex', `${index}`);
-                        setOpenReport(!isOpen);
-                      }}
-                      className="rounded py-2 text-white border-y border-black bg-blue-500"
-                    >
-                      Relatório
-                    </td>
                   </tr>
                 ))}
               </tbody>
