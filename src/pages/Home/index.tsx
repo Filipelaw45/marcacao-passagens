@@ -310,10 +310,14 @@ export function Home() {
                     </td>
                     <td
                       onClick={() => {
-                        const trip = JSON.parse(localStorage.getItem('trip') || '[]');
-                        if (trip) trip.splice(index, 1);
-                        localStorage.setItem('trip', JSON.stringify(trip));
-                        setTripsList(trip);
+                        if (window.confirm('Tem certeza de que deseja apagar essa viagem?')) {
+                          if (window.confirm('Absoluta?')) {
+                            const trip = JSON.parse(localStorage.getItem('trip') || '[]');
+                            trip.splice(index, 1);
+                            localStorage.setItem('trip', JSON.stringify(trip));
+                            setTripsList(trip);
+                          }
+                        }
                       }}
                       className="relative overflow-hidden bg-red-700 place-self-start py-2 text-white font-semibold transition-all duration-300 ease-in-out before:absolute before:top-0 before:right-full before:bg-red-800 before:h-full before:w-full before:transition-all before:duration-300 before:ease-in-out hover:before:right-0 z-10"
                     >
