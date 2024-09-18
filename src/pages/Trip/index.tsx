@@ -126,6 +126,69 @@ export function Trip() {
     });
   };
 
+  const handleSubmit = async () => {
+    const requiredFields = [
+      { name: 'fullName', label: 'Nome Completo' },
+      { name: 'rg', label: 'RG' },
+      { name: 'sex', label: 'Sexo' },
+      { name: 'value', label: 'Valor da Passagem' },
+      { name: 'escort', label: 'Escolta' },
+      { name: 'originCity', label: 'Cidade Origem' },
+      { name: 'originUf', label: 'Estado Origem' },
+      { name: 'destinationUf', label: 'Estado Destino' },
+      { name: 'destinationCity', label: 'Cidade Destino' },
+    ];
+    const missingFields = requiredFields.filter((field) => !currentPassenger[field.name as keyof Passenger]);
+
+    if (missingFields.length > 0) {
+      const missingFieldNames = missingFields.map((field) => field.label).join(', ');
+      alert(`Preencha os campos obrigatórios: ${missingFieldNames}.`);
+      return;
+    }
+
+    const passenger: Passenger = {
+      seat: currentPassengerIndex,
+      fullName: currentPassenger.fullName.toUpperCase(),
+      rg: currentPassenger.rg,
+      sex: currentPassenger.sex,
+      origin: {
+        city: currentPassenger.origin.city,
+        uf: currentPassenger.origin.uf,
+      },
+      destination: {
+        city: currentPassenger.destination.city,
+        uf: currentPassenger.destination.uf,
+      },
+      notes: currentPassenger.notes.toUpperCase(),
+      value: currentPassenger.value,
+      escort: currentPassenger.escort,
+    };
+
+    const existingPassengerIndex = selectedTrip.passengers.findIndex((p) => p.seat === passenger.seat);
+
+    if (existingPassengerIndex !== -1) {
+      selectedTrip.passengers[existingPassengerIndex] = passenger;
+    } else {
+      selectedTrip.passengers.push(passenger);
+    }
+
+    trips[selectedIndex] = selectedTrip;
+    localStorage.setItem('trip', JSON.stringify(trips));
+
+    closeModal();
+  };
+
+  const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>, type: 'value' | 'escort') => {
+    const { value } = e.target;
+    const formattedValue = value.replace(/\D/g, '');
+    const parsedValue = formattedValue ? parseFloat(formattedValue) / 100 : 0;
+
+    setCurrentPassenger((prevState) => ({
+      ...prevState,
+      [type]: parsedValue,
+    }));
+  };
+
   return (
     <>
       <Header>
@@ -205,7 +268,7 @@ export function Trip() {
                   <option value="F">Feminino</option>
                 </select>
                 <label className="font-semibold" htmlFor="value">
-                  Passagem:
+                  Valor da Passagem:
                 </label>
                 <input
                   id="value"
@@ -213,8 +276,10 @@ export function Trip() {
                   name="value"
                   autoComplete="off"
                   maxLength={70}
-                  onChange={handleChange}
-                  value={currentPassenger.value.toString().replace(/\D/g, '')}
+                  onChange={(e) => {
+                    handlePriceChange(e, 'value');
+                  }}
+                  value={currentPassenger.value.toFixed(2)}
                   className="border p-1 w-full"
                 />
                 <label className="font-semibold" htmlFor="escort">
@@ -226,8 +291,10 @@ export function Trip() {
                   name="escort"
                   autoComplete="off"
                   maxLength={70}
-                  value={currentPassenger.escort.toString().replace(/\D/g, '')}
-                  onChange={handleChange}
+                  value={currentPassenger.escort.toFixed(2)}
+                  onChange={(e) => {
+                    handlePriceChange(e, 'escort');
+                  }}
                   className="border p-1 w-full"
                 />
                 <label className="font-semibold" htmlFor="rg">
@@ -316,41 +383,7 @@ export function Trip() {
                   Fechar
                 </button>
 
-                <button
-                  className="rounded p-2 bg-green-600 text-white"
-                  onClick={() => {
-                    const passenger: Passenger = {
-                      seat: currentPassengerIndex,
-                      fullName: currentPassenger.fullName.toUpperCase(),
-                      rg: currentPassenger.rg,
-                      sex: currentPassenger.sex,
-                      origin: {
-                        city: currentPassenger.origin.city,
-                        uf: currentPassenger.origin.uf,
-                      },
-                      destination: {
-                        city: currentPassenger.destination.city,
-                        uf: currentPassenger.destination.uf,
-                      },
-                      notes: currentPassenger.notes.toUpperCase(),
-                      value: currentPassenger.value,
-                      escort: currentPassenger.escort,
-                    };
-
-                    const existingPassengerIndex = selectedTrip.passengers.findIndex((p) => p.seat === passenger.seat);
-
-                    if (existingPassengerIndex !== -1) {
-                      selectedTrip.passengers[existingPassengerIndex] = passenger;
-                    } else {
-                      selectedTrip.passengers.push(passenger);
-                    }
-
-                    trips[selectedIndex] = selectedTrip;
-                    localStorage.setItem('trip', JSON.stringify(trips));
-
-                    closeModal();
-                  }}
-                >
+                <button className="rounded p-2 bg-green-600 text-white" onClick={handleSubmit}>
                   Salvar
                 </button>
               </div>

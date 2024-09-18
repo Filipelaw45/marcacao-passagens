@@ -65,6 +65,27 @@ export function Home() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    const requiredFields = [
+      { name: 'departureDay', label: 'Data de Saída' },
+      { name: 'returnDay', label: 'Data de Retorno' },
+      { name: 'originUf', label: 'Estado de Origem' },
+      { name: 'originCity', label: 'Cidade de Origem' },
+      { name: 'destinationUf', label: 'Estado de Destino' },
+      { name: 'destinationCity', label: 'Cidade de Destino' },
+    ];
+    const missingFields = requiredFields.filter((field) => !formData[field.name as keyof Trip]);
+
+    if (missingFields.length > 0) {
+      const missingFieldNames = missingFields.map((field) => field.label).join(', ');
+      alert(`Preencha os campos obrigatórios: ${missingFieldNames}.`);
+      return;
+    }
+
+    createTrip(formData);
+    setIsOpen(!isOpen);
+    setFormData(initialTrip);
+    setTripsList(tripsList);
   };
 
   return (
@@ -248,16 +269,7 @@ export function Home() {
                     Cancelar
                   </button>
 
-                  <button
-                    className=" rounded p-2 bg-green-600 text-white"
-                    type="submit"
-                    onClick={() => {
-                      createTrip(formData);
-                      setIsOpen(!isOpen);
-                      setFormData(initialTrip);
-                      setTripsList(tripsList);
-                    }}
-                  >
+                  <button className="rounded p-2 bg-green-600 text-white" type="submit">
                     Confirmar
                   </button>
                 </div>

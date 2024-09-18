@@ -22,8 +22,8 @@ export function PrintTrip({ trip, handleClose }: { trip: Trip; handleClose: () =
           passenger.fullName,
           passenger.origin.city,
           passenger.origin.uf,
-          `R$ ${passenger.value}`,
-          `R$ ${passenger.escort}`,
+          `R$ ${passenger.value.toFixed(2)}`,
+          `R$ ${passenger.escort.toFixed(2)}`,
           '', // Volume
           '', // Frete
         ]),
@@ -36,6 +36,9 @@ export function PrintTrip({ trip, handleClose }: { trip: Trip; handleClose: () =
     XLSX.writeFile(wb, `${trip.departureDay.split('-').reverse().join('_')}_relatorio_viagem.xlsx`);
   };
 
+  console.log(typeof trip.passengers[0].value);
+  console.log(trip.passengers[0].value);
+  
   return (
     <div className="z-[20] fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
       <div className="printable-area w-5/6 h-[85vh] px-8 py-3 bg-white rounded">
@@ -88,8 +91,8 @@ export function PrintTrip({ trip, handleClose }: { trip: Trip; handleClose: () =
                     <td className="border border-black max-w-xs overflow-hidden text-ellipsis whitespace-nowrap">
                       {passenger.origin.city} - {passenger.origin.uf}
                     </td>
-                    <td className="border border-black">R$ {passenger.value}</td>
-                    <td className="border border-black">R$ {passenger.escort}</td>
+                  <td className="border border-black">R$ {`${passenger.value.toFixed(2)}`}</td>
+                    <td className="border border-black">R$ {`${passenger.escort.toFixed(2)}`}</td>
                   </tr>
                 ))}
             </tbody>
