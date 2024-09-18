@@ -311,12 +311,10 @@ export function Home() {
                     <td
                       onClick={() => {
                         if (window.confirm('Tem certeza de que deseja apagar essa viagem?')) {
-                          if (window.confirm('Absoluta?')) {
-                            const trip = JSON.parse(localStorage.getItem('trip') || '[]');
-                            trip.splice(index, 1);
-                            localStorage.setItem('trip', JSON.stringify(trip));
-                            setTripsList(trip);
-                          }
+                          const trip = JSON.parse(localStorage.getItem('trip') || '[]');
+                          trip.splice(index, 1);
+                          localStorage.setItem('trip', JSON.stringify(trip));
+                          setTripsList(trip);
                         }
                       }}
                       className="relative overflow-hidden bg-red-700 place-self-start py-2 text-white font-semibold transition-all duration-300 ease-in-out before:absolute before:top-0 before:right-full before:bg-red-800 before:h-full before:w-full before:transition-all before:duration-300 before:ease-in-out hover:before:right-0 z-10"
@@ -328,9 +326,9 @@ export function Home() {
                         localStorage.setItem('selectedTripIndex', `${index}`);
                         setOpenReport(!isOpen);
                       }}
-                      className="rounded py-2 text-white border-y border-black bg-blue-500"
+                      className="relative overflow-hidden bg-blue-500 place-self-start py-2 text-white font-semibold transition-all duration-300 ease-in-out before:absolute before:top-0 before:right-full before:bg-blue-600 before:h-full before:w-full before:transition-all before:duration-300 before:ease-in-out hover:before:right-0 z-10"
                     >
-                      Relatório
+                      <span className="relative z-20">Relatório</span>
                     </td>
                   </tr>
                 ))}
