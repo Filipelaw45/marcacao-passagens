@@ -1,4 +1,4 @@
-import Seats from '../Seats/Seats';
+import { Seat } from "../Seat";
 
 export function Bus64({ trip, openModal }: BusProps) {
   const upperDeckFirstColumn = [
@@ -23,7 +23,7 @@ export function Bus64({ trip, openModal }: BusProps) {
               return (
                 <div key={upperDeckFirstColumn[index]}>
                   {passenger ? (
-                    <Seats
+                    <Seat
                       sex={passenger.sex}
                       id={upperDeckFirstColumn[index]}
                       openModal={() => {
@@ -31,7 +31,7 @@ export function Bus64({ trip, openModal }: BusProps) {
                       }}
                     />
                   ) : (
-                    <Seats
+                    <Seat
                       isPreferential={isPreferential}
                       id={upperDeckFirstColumn[index]}
                       openModal={() => {
@@ -52,7 +52,7 @@ export function Bus64({ trip, openModal }: BusProps) {
               return (
                 <div key={upperDeckSecondColumn[index]}>
                   {passenger ? (
-                    <Seats
+                    <Seat
                       sex={passenger.sex}
                       id={upperDeckSecondColumn[index]}
                       openModal={() => {
@@ -60,7 +60,7 @@ export function Bus64({ trip, openModal }: BusProps) {
                       }}
                     />
                   ) : (
-                    <Seats
+                    <Seat
                       isPreferential={isPreferential}
                       id={upperDeckSecondColumn[index]}
                       openModal={() => {
@@ -85,7 +85,7 @@ export function Bus64({ trip, openModal }: BusProps) {
               return (
                 <div key={upperDeckSecondColumn2[index]}>
                   {passenger ? (
-                    <Seats
+                    <Seat
                       sex={passenger.sex}
                       id={upperDeckSecondColumn2[index]}
                       openModal={() => {
@@ -93,7 +93,7 @@ export function Bus64({ trip, openModal }: BusProps) {
                       }}
                     />
                   ) : (
-                    <Seats
+                    <Seat
                       isPreferential={isPreferential}
                       id={upperDeckSecondColumn2[index]}
                       openModal={() => {
@@ -161,7 +161,7 @@ export function Bus64({ trip, openModal }: BusProps) {
                 return (
                   <div key={lowerDeckFirstColumn[index]}>
                     {passenger ? (
-                      <Seats
+                      <Seat
                         sex={passenger.sex}
                         id={lowerDeckFirstColumn[index]}
                         openModal={() => {
@@ -169,7 +169,7 @@ export function Bus64({ trip, openModal }: BusProps) {
                         }}
                       />
                     ) : (
-                      <Seats
+                      <Seat
                         isPreferential={isPreferential}
                         id={lowerDeckFirstColumn[index]}
                         openModal={() => {
@@ -189,7 +189,7 @@ export function Bus64({ trip, openModal }: BusProps) {
                 return (
                   <div key={lowerDeckSecondColumn[index]}>
                     {passenger ? (
-                      <Seats
+                      <Seat
                         sex={passenger.sex}
                         id={lowerDeckSecondColumn[index]}
                         openModal={() => {
@@ -197,7 +197,7 @@ export function Bus64({ trip, openModal }: BusProps) {
                         }}
                       />
                     ) : (
-                      <Seats
+                      <Seat
                         isPreferential={isPreferential}
                         id={lowerDeckSecondColumn[index]}
                         openModal={() => {

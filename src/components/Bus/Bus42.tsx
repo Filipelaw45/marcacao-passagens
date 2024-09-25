@@ -1,4 +1,4 @@
-import Seats from '../Seats/Seats';
+import { Seat } from "../Seat";
 
 export function Bus42({ trip, openModal }: BusProps) {
   const upperDeckFirstColumn = [1, 2, 5, 6, 9, 10, 13, 14, 17, 18, 21, 22, 25, 26, 29, 30, 33, 34, 37, 38, 41, 42];
@@ -21,7 +21,7 @@ export function Bus42({ trip, openModal }: BusProps) {
                 return (
                   <div key={upperDeckFirstColumn[index]}>
                     {passenger ? (
-                      <Seats
+                      <Seat
                         sex={passenger.sex}
                         id={upperDeckFirstColumn[index]}
                         openModal={() => {
@@ -29,7 +29,7 @@ export function Bus42({ trip, openModal }: BusProps) {
                         }}
                       />
                     ) : (
-                      <Seats
+                      <Seat
                         id={upperDeckFirstColumn[index]}
                         openModal={() => {
                           openModal(null, upperDeckFirstColumn[index]);
@@ -48,7 +48,7 @@ export function Bus42({ trip, openModal }: BusProps) {
                 return (
                   <div key={upperDeckSecondColumn2[index]}>
                     {passenger ? (
-                      <Seats
+                      <Seat
                         sex={passenger.sex}
                         id={upperDeckSecondColumn2[index]}
                         openModal={() => {
@@ -56,7 +56,7 @@ export function Bus42({ trip, openModal }: BusProps) {
                         }}
                       />
                     ) : (
-                      <Seats
+                      <Seat
                         id={upperDeckSecondColumn2[index]}
                         openModal={() => {
                           openModal(null, upperDeckSecondColumn2[index]);

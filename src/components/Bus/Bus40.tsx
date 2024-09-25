@@ -1,4 +1,4 @@
-import Seats from '../Seats/Seats';
+import { Seat } from "../Seat";
 
 export function Bus40({ trip, openModal }: BusProps) {
   const upperDeckFirstColumn = [1, 2, 4, 5, 7, 8, 9, 10, 11, 12, 14, 15, 17, 18, 20, 21, 23, 24, 26, 27, 29, 30];
@@ -22,7 +22,7 @@ export function Bus40({ trip, openModal }: BusProps) {
                 return (
                   <div key={upperDeckFirstColumn[index]}>
                     {passenger ? (
-                      <Seats
+                      <Seat
                         sex={passenger.sex}
                         id={upperDeckFirstColumn[index]}
                         isPreferential={isPreferential}
@@ -31,7 +31,7 @@ export function Bus40({ trip, openModal }: BusProps) {
                         }}
                       />
                     ) : (
-                      <Seats
+                      <Seat
                         id={upperDeckFirstColumn[index]}
                         isPreferential={isPreferential}
                         openModal={() => {
@@ -52,7 +52,7 @@ export function Bus40({ trip, openModal }: BusProps) {
                 return (
                   <div key={upperDeckSecondColumn[index]}>
                     {passenger ? (
-                      <Seats
+                      <Seat
                         sex={passenger.sex}
                         id={upperDeckSecondColumn[index]}
                         isPreferential={isPreferential}
@@ -61,7 +61,7 @@ export function Bus40({ trip, openModal }: BusProps) {
                         }}
                       />
                     ) : (
-                      <Seats
+                      <Seat
                         id={upperDeckSecondColumn[index]}
                         isPreferential={isPreferential}
                         openModal={() => {
@@ -86,7 +86,7 @@ export function Bus40({ trip, openModal }: BusProps) {
                 return (
                   <div key={upperDeckSecondColumn2[index]}>
                     {passenger ? (
-                      <Seats
+                      <Seat
                         sex={passenger.sex}
                         id={upperDeckSecondColumn2[index]}
                         isPreferential={isPreferential}
@@ -95,7 +95,7 @@ export function Bus40({ trip, openModal }: BusProps) {
                         }}
                       />
                     ) : (
-                      <Seats
+                      <Seat
                         id={upperDeckSecondColumn2[index]}
                         isPreferential={isPreferential}
                         openModal={() => {
@@ -163,7 +163,7 @@ export function Bus40({ trip, openModal }: BusProps) {
                   return (
                     <div key={lowerDeckFirstColumn[index]}>
                       {passenger ? (
-                        <Seats
+                        <Seat
                           sex={passenger.sex}
                           id={lowerDeckFirstColumn[index]}
                           isPreferential={isPreferential}
@@ -172,7 +172,7 @@ export function Bus40({ trip, openModal }: BusProps) {
                           }}
                         />
                       ) : (
-                        <Seats
+                        <Seat
                           id={lowerDeckFirstColumn[index]}
                           isPreferential={isPreferential}
                           openModal={() => {
@@ -192,7 +192,7 @@ export function Bus40({ trip, openModal }: BusProps) {
                   return (
                     <div key={lowerDeckSecondColumn[index]}>
                       {passenger ? (
-                        <Seats
+                        <Seat
                           sex={passenger.sex}
                           id={lowerDeckSecondColumn[index]}
                           isPreferential={isPreferential}
@@ -201,7 +201,7 @@ export function Bus40({ trip, openModal }: BusProps) {
                           }}
                         />
                       ) : (
-                        <Seats
+                        <Seat
                           id={lowerDeckSecondColumn[index]}
                           isPreferential={isPreferential}
                           openModal={() => {
