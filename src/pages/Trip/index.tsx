@@ -305,7 +305,7 @@ export function Trip() {
                   onChange={handleChange}
                   className="border p-1 w-full"
                 />
-                <div className="flex py-3 gap-10">
+                <div className="py-3 gap-10 flex flex-col lg:flex lg:flex-row">
                   <p>
                     <span className="font-semibold">Origem:</span> {currentPassenger.origin.city} -{' '}
                     {currentPassenger.origin.uf}
@@ -388,7 +388,7 @@ export function Trip() {
 
         {editTrip && (
           <div className="z-[20] fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-            <div className="w-3/4 h-6/7 px-8 py-3 bg-white rounded">
+            <div className="lg:w-3/4 lg:h-[95%] w-full h-full px-8 py-3 bg-white rounded overflow-y-scroll">
               <div>
                 <label className="font-semibold" htmlFor="departureDay">
                   Data de saída:
@@ -475,12 +475,12 @@ export function Trip() {
                 onChange={handleTripChange}
               />
 
-              <div className="flex w-full justify-between">
-                <div className="w-1/2">
+              <div className="lg:flex w-full md:flex gap-9">
+                <div className="w-full">
                   <label className="block py-1 font-semibold" htmlFor="originUf">
                     Nova origem:
                   </label>
-                  <div className="flex gap-3">
+                  <div className="lg:flex flex flex-col gap-3">
                     <select id="originUf" name="originUf" onChange={handleTripChange} value={currentTrip.originUf}>
                       <option value="">Selecione a origem</option>
                       {ufs.map((uf) => (
@@ -500,11 +500,11 @@ export function Trip() {
                     </select>
                   </div>
                 </div>
-                <div className="w-1/2">
+                <div className="w-full">
                   <label className="block py-1 font-semibold" htmlFor="destinationUf">
                     Novo Destino:
                   </label>
-                  <div className="flex gap-3">
+                  <div className="lg:flex flex flex-col gap-3">
                     <select
                       id="destinationUf"
                       name="destinationUf"
