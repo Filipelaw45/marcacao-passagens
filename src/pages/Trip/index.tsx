@@ -206,7 +206,7 @@ export function Trip() {
       <div className="w-4/5 mx-auto">
         {isOpen && (
           <div className="z-[20] fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-            <div className="w-3/4 h-6/7 px-8 py-3 bg-white rounded">
+            <div className="lg:w-3/4 lg:h-[95%] w-full h-full px-8 py-3 bg-white rounded overflow-y-scroll">
               <div>
                 <div className="relative">
                   <h2 className="py-3 font-extrabold text-center text-2xl">Poltrona {currentPassengerIndex}</h2>
@@ -322,14 +322,14 @@ export function Trip() {
                 </div>
               </div>
 
-              <div className="flex w-full justify-between">
-                <div className="w-1/2">
+              <div className="lg:flex w-full md:flex gap-9">
+                <div className="w-full">
                   <label className="block py-1 font-semibold" htmlFor="originUf">
                     Nova origem:
                   </label>
-                  <div className="flex gap-3">
+                  <div className="lg:flex flex flex-col gap-3">
                     <select id="originUf" name="originUf" onChange={handleChange} value={currentPassenger.origin.uf}>
-                      <option value="">Selecione a origem</option>
+                      <option value="">Selecione o estado</option>
                       {ufs.map((uf) => (
                         <option key={uf.id} value={uf.sigla}>
                           {uf.sigla}
@@ -338,7 +338,7 @@ export function Trip() {
                     </select>
 
                     <select name="originCity" onChange={handleChange} value={currentPassenger.origin.city}>
-                      <option value="">Selecione a cidade de origem</option>
+                      <option value="">Selecione a cidade</option>
                       {cities.origin.map((city: City) => (
                         <option key={city.codigo_ibge} value={city.nome}>
                           {city.nome}
@@ -347,18 +347,18 @@ export function Trip() {
                     </select>
                   </div>
                 </div>
-                <div className="w-1/2">
+                <div className="w-full">
                   <label className="block py-1 font-semibold" htmlFor="destinationUf">
                     Novo Destino:
                   </label>
-                  <div className="flex gap-3">
+                  <div className="lg:flex flex flex-col gap-3">
                     <select
                       id="destinationUf"
                       name="destinationUf"
                       onChange={handleChange}
                       value={currentPassenger.destination.uf}
                     >
-                      <option value="">Selecione a origem</option>
+                      <option value="">Selecione o estado</option>
                       {ufs.map((uf) => (
                         <option key={uf.id} value={uf.sigla}>
                           {uf.sigla}
@@ -367,7 +367,7 @@ export function Trip() {
                     </select>
 
                     <select name="destinationCity" onChange={handleChange} value={currentPassenger.destination.city}>
-                      <option value="">Selecione a cidade de origem</option>
+                      <option value="">Selecione a cidade</option>
                       {cities.destination.map((city: City) => (
                         <option key={city.codigo_ibge} value={city.nome}>
                           {city.nome}
@@ -569,8 +569,9 @@ export function Trip() {
             </div>
           </div>
         )}
-        <div className="grid grid-cols-2">
-          <div>
+
+        <div className="grid lg:grid-cols-2 lg:grid-rows-1 gap-4">
+          <div className="lg:col-start-1 lg:row-start-1 order-1">
             <div className="flex gap-10">
               <div>
                 <h1 className="py-2 text-2xl">Detalhes da Viagem</h1>
@@ -618,45 +619,45 @@ export function Trip() {
                 </div>
               </div>
             </div>
+          </div>
 
-            <div>
-              <h2 className="py-2 mb-3 mt-10 text-2xl text-neutral-900 font-extrabold">Passageiros:</h2>
-              <div className="h-[70vh] mb-10 overflow-y-auto max-w-[90%] scrollbar-custom">
-                {selectedTrip.passengers.map((passenger, index) => (
-                  <div
-                    onClick={() => openModal(passenger, passenger.seat)}
-                    className={`cursor-pointer w-full flex justify-between px-3 py-2 ${
-                      index % 2 === 0 ? 'bg-gray-200 hover:bg-blue-200' : 'bg-gray-400 text-black hover:bg-blue-200'
-                    }`}
-                    key={index}
-                  >
-                    <div className="text-sm">
-                      <p>
-                        <span className="font-semibold">Nome: </span>
-                        {passenger.fullName}
-                      </p>
-                      <p>
-                        <span className="font-semibold">RG: </span>
-                        {passenger.rg}
-                      </p>
-                      <p>
-                        <span className="font-semibold">Origem: </span>
-                        {passenger.origin.city} - {passenger.origin.uf}
-                      </p>
-                      <p>
-                        <span className="font-semibold">Destino: </span>
-                        {passenger.destination.city} - {passenger.destination.uf}
-                      </p>
-                    </div>
-                    <Seats id={passenger.seat} sex={passenger.sex} width="w-[60px]" height="h-[60px]" />
+          <div className="lg:col-start-1 lg:row-start-1 lg:mt-[20rem] order-3">
+            <h2 className="py-2 mb-3 mt-10 text-2xl text-neutral-900 font-extrabold">Passageiros:</h2>
+            <div className="h-[70vh] mb-10 overflow-y-auto max-w-[90%] scrollbar-custom">
+              {selectedTrip.passengers.map((passenger, index) => (
+                <div
+                  onClick={() => openModal(passenger, passenger.seat)}
+                  className={`cursor-pointer w-full flex justify-between px-3 py-2 ${
+                    index % 2 === 0 ? 'bg-gray-200 hover:bg-blue-200' : 'bg-gray-400 text-black hover:bg-blue-200'
+                  }`}
+                  key={index}
+                >
+                  <div className="text-sm">
+                    <p>
+                      <span className="font-semibold">Nome: </span>
+                      {passenger.fullName}
+                    </p>
+                    <p>
+                      <span className="font-semibold">RG: </span>
+                      {passenger.rg}
+                    </p>
+                    <p>
+                      <span className="font-semibold">Origem: </span>
+                      {passenger.origin.city} - {passenger.origin.uf}
+                    </p>
+                    <p>
+                      <span className="font-semibold">Destino: </span>
+                      {passenger.destination.city} - {passenger.destination.uf}
+                    </p>
                   </div>
-                ))}
-              </div>
+                  <Seats id={passenger.seat} sex={passenger.sex} width="w-[60px]" height="h-[60px]" />
+                </div>
+              ))}
             </div>
           </div>
 
-          <div>
-            <div className="sticky top-5 mt-5 flex justify-center">
+          <div className="lg:row-span-2 lg:col-start-2 lg:row-start-1 order-2">
+            <div className="lg:mt-5 mt-1 flex justify-center">
               {selectedTrip.busModel === '42' && <Bus42 openModal={openModal} trip={selectedTrip} />}
               {selectedTrip.busModel === '64' && <Bus64 openModal={openModal} trip={selectedTrip} />}
               {selectedTrip.busModel === '40' && <Bus40 openModal={openModal} trip={selectedTrip} />}
