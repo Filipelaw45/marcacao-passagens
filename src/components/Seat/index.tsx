@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-const Seats: React.FC<SeatProps> = ({ id, width = 'w-11', height = 'h-9', sex, isPreferential, openModal }) => {
+export const Seat: React.FC<SeatProps> = ({ id, width = 'w-11', height = 'h-9', sex, isPreferential, openModal }) => {
   const [isClicked, setIsClicked] = useState(false);
 
   const handleClick = () => {
@@ -41,5 +41,3 @@ const Seats: React.FC<SeatProps> = ({ id, width = 'w-11', height = 'h-9', sex, i
     </div>
   );
 };
-
-export default Seats;

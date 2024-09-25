@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { ufs } from '../../helpers/Ufs';
 import { Link } from 'react-router-dom';
-import Seats from '../../components/Seats/Seats';
 import { Bus64 } from '../../components/Bus/Bus64';
 import { Header } from '../../components/Header/Header';
 import { Bus42 } from '../../components/Bus/Bus42';
 import { Bus40 } from '../../components/Bus/Bus40';
+import { fetchCities } from '../../utils/fetchCities';
+import { Seat } from '../../components/Seat';
 
 export function Trip() {
   const trips = JSON.parse(localStorage.getItem('trip') || '[]');
@@ -37,12 +38,6 @@ export function Trip() {
   const [isOpen, setIsOpen] = useState(false);
   const [editTrip, setEditTrip] = useState(false);
   const [cities, setCities] = useState({ origin: [], destination: [] });
-
-  const fetchCities = async (uf: string) => {
-    const response = await fetch(`https://brasilapi.com.br/api/ibge/municipios/v1/${uf}`);
-    const data = await response.json();
-    return data;
-  };
 
   const openModal = (passenger: Passenger | null, index: number) => {
     setCurrentPassengerIndex(index);
@@ -650,7 +645,7 @@ export function Trip() {
                       {passenger.destination.city} - {passenger.destination.uf}
                     </p>
                   </div>
-                  <Seats id={passenger.seat} sex={passenger.sex} width="w-[60px]" height="h-[60px]" />
+                  <Seat id={passenger.seat} sex={passenger.sex} width="w-[60px]" height="h-[60px]" />
                 </div>
               ))}
             </div>
