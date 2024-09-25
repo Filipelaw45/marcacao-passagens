@@ -540,17 +540,17 @@ export function Trip() {
                   className="rounded p-2 bg-green-600 text-white"
                   onClick={() => {
                     const updatedTrip: Trip = {
-                      busNumber: currentTrip.busNumber,
-                      departureDay: currentTrip.departureDay,
-                      returnDay: currentTrip.returnDay,
-                      busModel: currentTrip.busModel,
-                      destinationCity: currentTrip.destinationCity,
-                      destinationUf: currentTrip.destinationUf,
-                      originCity: currentTrip.originCity,
-                      originUf: currentTrip.originUf,
-                      driver: currentTrip.driver,
-                      passengers: currentTrip.passengers,
-                      team: currentTrip.team,
+                      busNumber: selectedTrip.busNumber,
+                      departureDay: selectedTrip.departureDay,
+                      returnDay: selectedTrip.returnDay,
+                      busModel: selectedTrip.busModel,
+                      destinationCity: selectedTrip.destinationCity,
+                      destinationUf: selectedTrip.destinationUf,
+                      originCity: selectedTrip.originCity,
+                      originUf: selectedTrip.originUf,
+                      driver: selectedTrip.driver,
+                      team: selectedTrip.team,
+                      passengers: selectedTrip.passengers,
                     };
 
                     trips[selectedIndex] = updatedTrip;
