@@ -169,6 +169,7 @@ export function Trip() {
 
     trips[selectedIndex] = selectedTrip;
     localStorage.setItem('trip', JSON.stringify(trips));
+    setCurrentTrip(trips[selectedIndex]);
 
     closeModal();
   };
@@ -540,17 +541,17 @@ export function Trip() {
                   className="rounded p-2 bg-green-600 text-white"
                   onClick={() => {
                     const updatedTrip: Trip = {
-                      busNumber: selectedTrip.busNumber,
-                      departureDay: selectedTrip.departureDay,
-                      returnDay: selectedTrip.returnDay,
-                      busModel: selectedTrip.busModel,
-                      destinationCity: selectedTrip.destinationCity,
-                      destinationUf: selectedTrip.destinationUf,
-                      originCity: selectedTrip.originCity,
-                      originUf: selectedTrip.originUf,
-                      driver: selectedTrip.driver,
-                      team: selectedTrip.team,
-                      passengers: selectedTrip.passengers,
+                      busNumber: currentTrip.busNumber,
+                      departureDay: currentTrip.departureDay,
+                      returnDay: currentTrip.returnDay,
+                      busModel: currentTrip.busModel,
+                      destinationCity: currentTrip.destinationCity,
+                      destinationUf: currentTrip.destinationUf,
+                      originCity: currentTrip.originCity,
+                      originUf: currentTrip.originUf,
+                      driver: currentTrip.driver,
+                      team: currentTrip.team,
+                      passengers: currentTrip.passengers,
                     };
 
                     trips[selectedIndex] = updatedTrip;
