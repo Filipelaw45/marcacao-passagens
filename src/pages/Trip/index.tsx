@@ -18,8 +18,11 @@ export function Trip() {
   const initialPassenger: Passenger = {
     seat: -1,
     fullName: '',
-    rg: '',
+    documentType: 'CPF',
+    document: '',
     sex: 'F',
+    departureDate: '',
+    departureTime: '',
     origin: {
       city: '',
       uf: '',
@@ -89,6 +92,28 @@ export function Trip() {
     });
   };
 
+  const handleDocumentTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const { value } = e.target;
+    setCurrentPassenger((prev) => ({
+      ...prev,
+      documentType: value,
+      document: '',
+    }));
+  };
+
+  const handleDocumentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    let formattedValue = value;
+
+    if (currentPassenger.documentType === 'CPF') {
+      formattedValue = value.replace(/\D/g, '').slice(0, 11);
+    } else {
+      formattedValue = value.replace(/[^a-zA-Z0-9]/g, '').slice(0, 13);
+    }
+
+    setCurrentPassenger((prev) => ({ ...prev, document: formattedValue }));
+  };
+
   const handleTripChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target;
 
@@ -124,10 +149,12 @@ export function Trip() {
   const handleSubmit = async () => {
     const requiredFields = [
       { name: 'fullName', label: 'Nome Completo' },
-      { name: 'rg', label: 'RG' },
+      { name: 'document', label: currentPassenger.documentType },
       { name: 'sex', label: 'Sexo' },
       { name: 'value', label: 'Valor da Passagem' },
       { name: 'escort', label: 'Escolta' },
+      { name: 'departureDate', label: 'Data de saída' },
+      { name: 'departureTime', label: 'Horário de saída' },
       { name: 'originCity', label: 'Cidade Origem' },
       { name: 'originUf', label: 'Estado Origem' },
       { name: 'destinationUf', label: 'Estado Destino' },
@@ -144,8 +171,11 @@ export function Trip() {
     const passenger: Passenger = {
       seat: currentPassengerIndex,
       fullName: currentPassenger.fullName.toUpperCase(),
-      rg: currentPassenger.rg,
+      documentType: currentPassenger.documentType,
+      document: currentPassenger.document,
       sex: currentPassenger.sex,
+      departureDate: currentPassenger.departureDate,
+      departureTime: currentPassenger.departureTime,
       origin: {
         city: currentPassenger.origin.city,
         uf: currentPassenger.origin.uf,
@@ -237,75 +267,127 @@ export function Trip() {
                   className="border p-1 w-full"
                   onChange={handleChange}
                 />
-                <label className="font-semibold" htmlFor="rg">
-                  RG:
-                </label>
-                <input
-                  id="rg"
-                  type="text"
-                  autoComplete="off"
-                  name="rg"
-                  maxLength={11}
-                  onChange={handleChange}
-                  value={currentPassenger.rg.replace(/[^0-9]/g, '')}
-                  className="border p-1 w-full"
-                />
-                <label className="font-semibold" htmlFor="sex">
-                  Sexo:
-                </label>
-                <select
-                  id="sex"
-                  name="sex"
-                  onChange={handleChange}
-                  value={currentPassenger.sex || 'F'}
-                  className="border p-1 w-full"
-                >
-                  <option value="M">Masculino</option>
-                  <option value="F">Feminino</option>
-                </select>
-                <label className="font-semibold" htmlFor="value">
-                  Valor da Passagem:
-                </label>
-                <input
-                  id="value"
-                  type="number"
-                  name="value"
-                  autoComplete="off"
-                  maxLength={70}
-                  onChange={(e) => {
-                    handlePriceChange(e, 'value');
-                  }}
-                  value={currentPassenger.value.toFixed(2)}
-                  className="border p-1 w-full"
-                />
-                <label className="font-semibold" htmlFor="escort">
-                  Escolta:
-                </label>
-                <input
-                  id="escort"
-                  type="number"
-                  name="escort"
-                  autoComplete="off"
-                  maxLength={70}
-                  value={currentPassenger.escort.toFixed(2)}
-                  onChange={(e) => {
-                    handlePriceChange(e, 'escort');
-                  }}
-                  className="border p-1 w-full"
-                />
-                <label className="font-semibold" htmlFor="rg">
-                  Observação:
-                </label>
-                <input
-                  id="notes"
-                  type="text"
-                  name="notes"
-                  autoComplete="off"
-                  maxLength={70}
-                  value={currentPassenger.notes}
-                  onChange={handleChange}
-                  className="border p-1 w-full"
-                />
+                <div className="flex lg:gap-16 gap-2 flex-col lg:flex-row mt-5">
+                  <div className="w-full">
+                    <label className="font-semibold" htmlFor="documentType">
+                      Tipo de documento:
+                    </label>
+                    <select
+                      id="documentType"
+                      name="documentType"
+                      onChange={handleDocumentTypeChange}
+                      value={currentPassenger.documentType}
+                      className="border p-1 w-full"
+                    >
+                      <option value="CPF">CPF</option>
+                      <option value="Passaporte">Passaporte</option>
+                      <option value="RG">RG</option>
+                    </select>
+                  </div>
+                  <div className="w-full">
+                    <label htmlFor="document">{currentPassenger.documentType}:</label>
+                    <input
+                      id="document"
+                      type="text"
+                      name="document"
+                      value={currentPassenger.document}
+                      onChange={handleDocumentChange}
+                      className="border p-1 w-full"
+                    />
+                  </div>
+                </div>
+                <div className="mt-5">
+                  <label className="font-semibold" htmlFor="sex">
+                    Sexo:
+                  </label>
+                  <select
+                    id="sex"
+                    name="sex"
+                    onChange={handleChange}
+                    value={currentPassenger.sex || 'F'}
+                    className="border p-1 w-full"
+                  >
+                    <option value="M">Masculino</option>
+                    <option value="F">Feminino</option>
+                  </select>
+                </div>
+                <div className="mt-5">
+                  <label className="font-semibold" htmlFor="value">
+                    Valor da Passagem:
+                  </label>
+                  <input
+                    id="value"
+                    type="number"
+                    name="value"
+                    autoComplete="off"
+                    maxLength={70}
+                    onChange={(e) => {
+                      handlePriceChange(e, 'value');
+                    }}
+                    value={currentPassenger.value.toFixed(2)}
+                    className="border p-1 w-full"
+                  />
+                </div>
+                <div className="mt-5">
+                  <label className="font-semibold" htmlFor="escort">
+                    Escolta:
+                  </label>
+                  <input
+                    id="escort"
+                    type="number"
+                    name="escort"
+                    autoComplete="off"
+                    maxLength={70}
+                    value={currentPassenger.escort.toFixed(2)}
+                    onChange={(e) => {
+                      handlePriceChange(e, 'escort');
+                    }}
+                    className="border p-1 w-full"
+                  />
+                </div>
+                <div className="mt-5">
+                  <label className="font-semibold" htmlFor="departureDate">
+                    Data de Saída:
+                  </label>
+                  <input
+                    id="departureDate"
+                    type="date"
+                    name="departureDate"
+                    autoComplete="off"
+                    value={currentPassenger.departureDate}
+                    className="border p-1 w-full"
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="mt-5">
+                  <label className="font-semibold" htmlFor="departureTime">
+                    Hora de Saída:
+                  </label>
+                  <input
+                    id="departureTime"
+                    type="time"
+                    name="departureTime"
+                    autoComplete="off"
+                    value={currentPassenger.departureTime}
+                    className="border p-1 w-full"
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="mt-5">
+                  <label className="font-semibold" htmlFor="notes">
+                    Observação:
+                  </label>
+                  <input
+                    id="notes"
+                    type="text"
+                    name="notes"
+                    autoComplete="off"
+                    maxLength={70}
+                    value={currentPassenger.notes}
+                    onChange={handleChange}
+                    className="border p-1 w-full"
+                  />
+                </div>
                 <div className="py-3 gap-10 flex flex-col lg:flex lg:flex-row">
                   <p>
                     <span className="font-semibold">Origem:</span> {currentPassenger.origin.city} -{' '}
@@ -634,8 +716,8 @@ export function Trip() {
                       {passenger.fullName}
                     </p>
                     <p>
-                      <span className="font-semibold">RG: </span>
-                      {passenger.rg}
+                      <span className="font-semibold">{passenger.documentType}: </span>
+                      {passenger.document}
                     </p>
                     <p>
                       <span className="font-semibold">Origem: </span>
@@ -645,6 +727,20 @@ export function Trip() {
                       <span className="font-semibold">Destino: </span>
                       {passenger.destination.city} - {passenger.destination.uf}
                     </p>
+                    <p>
+                      <span className="font-semibold">Data de saída: </span>
+                      {passenger.departureDate.split('-').reverse().join('/')}
+                    </p>
+                    <p>
+                      <span className="font-semibold">Horário de saída: </span>
+                      {passenger.departureTime}
+                    </p>
+                    {passenger.notes ? (
+                      <p>
+                        <span className="font-semibold">Observação: </span>
+                        {passenger.notes}
+                      </p>
+                    ) : null}
                   </div>
                   <Seat id={passenger.seat} sex={passenger.sex} width="w-[60px]" height="h-[60px]" />
                 </div>

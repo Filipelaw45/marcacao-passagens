@@ -20,8 +20,11 @@ interface SeatProps {
 interface Passenger {
   seat: number;
   fullName: string;
-  rg: string;
+  documentType: string;
+  document: string;
   sex: 'F' | 'M';
+  departureDate: string;
+  departureTime: string;
   origin: {
     city: string;
     uf: string;
