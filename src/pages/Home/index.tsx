@@ -305,8 +305,12 @@ export function Home() {
                     key={index}
                     className="hover:bg-gray-400 hover:cursor-pointer transition-all duration-300 ease-in-out"
                   >
-                    <td className="py-2 px-3 border-y border-black whitespace-nowrap">{trip.departureDay.split('-').reverse().join('/')}</td>
-                    <td className="py-2 px-3 border-y border-black whitespace-nowrap">{trip.returnDay.split('-').reverse().join('/')}</td>
+                    <td className="py-2 px-3 border-y border-black whitespace-nowrap">
+                      {trip.departureDay.split('-').reverse().join('/')}
+                    </td>
+                    <td className="py-2 px-3 border-y border-black whitespace-nowrap">
+                      {trip.returnDay.split('-').reverse().join('/')}
+                    </td>
                     <td className="py-2 px-3 border-y border-black whitespace-nowrap">{trip.originUf}</td>
                     <td className="py-2 px-3 border-y border-black whitespace-nowrap">{trip.destinationUf}</td>
                     <td className="py-2 px-3 border-y border-black whitespace-nowrap">{trip.busNumber}</td>
