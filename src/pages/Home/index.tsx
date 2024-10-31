@@ -111,7 +111,7 @@ export function Home() {
 
         {isOpen && (
           <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-            <div className="w-full h-full px-8 py-3 bg-white md:w-3/4 md:h-4/5">
+            <div className="w-full h-full px-8 py-3 bg-white md:w-3/4 md:h-4/5 overflow-auto">
               <h2 className="py-1 text-center text-xl">Criar Viagem</h2>
               <form onSubmit={handleSubmit} className="flex flex-col">
                 <label className="block py-1" htmlFor="departureDay">
